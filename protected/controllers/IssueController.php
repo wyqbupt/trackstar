@@ -2,6 +2,25 @@
 
 class IssueController extends Controller
 {
+
+
+	//contains ths project name the issue belongs to
+	private $_project = null ;
+	
+	
+	protected function loadProject($project)
+	{
+		if($this->_project == null)
+		{
+			$this->_project = Project::model()->findByPk($project);
+			if($this->_project == null)
+			{
+				throw new CHttpException(404,'The requested project does not exist.');
+			}
+		}
+		return $this->_project;
+	}
+	
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -16,6 +35,7 @@ class IssueController extends Controller
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
+			'ProjectContext + create', //ensure valid project context
 		);
 	}
 
@@ -170,4 +190,26 @@ class IssueController extends Controller
 			Yii::app()->end();
 		}
 	}
+	
+	// a filter used in issue operations
+	public function filterProjectContext($filterChain) 
+	{ 
+		$projectID = null;
+		if(isset($_GET['pid']))
+		{
+			$projectID = $_GET['pid'];
+		}
+		else
+		{	
+			if(isset($_POST['pid']))
+			{
+				$projectID = $_POST['pid'];
+			}
+		}
+		$this->loadProject($projectID);
+		
+		$filterChain->run(); 
+	}
+	
+	
 }
