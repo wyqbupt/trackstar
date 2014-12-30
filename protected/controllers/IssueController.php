@@ -83,10 +83,11 @@ class IssueController extends Controller
 	public function actionCreate()
 	{
 		$model=new Issue;
+		$model->project_id = $this->_project->id;
+		
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Issue']))
 		{
 			$model->attributes=$_POST['Issue'];
@@ -210,6 +211,9 @@ class IssueController extends Controller
 		
 		$filterChain->run(); 
 	}
-	
+	public function getProject()
+	{
+		return $this->_project;
+	}
 	
 }

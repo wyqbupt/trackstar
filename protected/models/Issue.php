@@ -68,6 +68,9 @@ class Issue extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+					'requester' => array(self::BELONGS_TO, 'User', 'requester_id'), 
+					'owner' => array(self::BELONGS_TO, 'User', 'owner_id'), 
+					'project' => array(self::BELONGS_TO, 'Project', 'project_id'),
 		);
 	}
 
@@ -154,5 +157,5 @@ class Issue extends CActiveRecord
 			self::TYPE_FINISHED=>'Finished',
 		);
 	}
-	
+
 }
