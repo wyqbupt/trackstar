@@ -33,7 +33,6 @@
 
 	<div class="row">
 		<?php echo $form->hiddenField($model,'project_id'); ?>
-
 	</div>
 
 	<div class="row">
