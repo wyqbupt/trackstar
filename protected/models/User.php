@@ -123,7 +123,7 @@ class User extends TrackStarActiveRecord
 	public function afterValidate()
 	{
 		parent::afterValidate();
-		//$this->password = $this->encrypt($this->password);
+		$this->password = $this->encrypt($this->password);
 	}
 	public function encrypt($value)
 	{
