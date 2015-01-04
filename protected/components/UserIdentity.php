@@ -28,7 +28,7 @@ class UserIdentity extends CUserIdentity
 		}	
 		else
 		{
-			if($user->password != $this->encrypt($this->password))
+			if($user->password != $user->encrypt($this->password))
 			{
 		
 				$this->errorCode=self::ERROR_PASSWORD_INVALID;
@@ -36,7 +36,7 @@ class UserIdentity extends CUserIdentity
 			}
 			else
 			{
-				$this->_id = user->_id;
+				$this->_id = $user->id;
 				if(null == $user->last_login_time)
 				{
 					$LastLogin = time();
@@ -44,8 +44,9 @@ class UserIdentity extends CUserIdentity
 				else
 				{
 					$LastLogin = strtotime($user->last_login_time);
-				}	
-				$this->setState('lastLoginTime',$lastLogin);
+				}
+				$this->setState('Username', $user->username);				
+				$this->setState('lastLoginTime',$LastLogin);
 				$this->errorCode=self::ERROR_NONE;
 			}
 		}
