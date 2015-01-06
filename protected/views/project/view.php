@@ -39,3 +39,11 @@ $this->menu=array(
 	'itemView'=>'/issue/_view'
 	));
 ?>
+
+<?php
+	$this->beginWidget('zii.widgets.CPortlet', array( 
+		'title'=>'Recent Comments',
+	));
+	$this->widget('RecentComments',array('projectId'=>$model->id)); 
+	$this->endWidget();
+?>
