@@ -2,6 +2,9 @@
 
 class SiteController extends Controller
 {
+
+	//defaul action
+	public $defaultAction = 'login';
 	/**
 	 * Declares class-based actions.
 	 */

@@ -2330,3 +2330,33 @@ Stack trace:
 #21 {main}
 REQUEST_URI=/trackstar/index.php?r=project
 ---
+2015/01/10 22:41:29 [error] [php] require_once(Zend/Feed.php): failed to open stream: No such file or directory (D:\wamp\www\trackstar\protected\controllers\CommentController.php:3)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CWebApplication.php(276): CWebApplication->createController()
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#2 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#3 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php?r=comment/feed
+in D:\wamp\www\trackstar\protected\controllers\CommentController.php (3)
+in D:\wamp\www\trackstar\protected\controllers\CommentController.php (3)
+in D:\wamp\www\trackstar\index.php (13)
+2015/01/10 22:41:29 [error] [php] require_once(Zend/Feed.php): failed to open stream: No such file or directory (D:\wamp\www\trackstar\protected\controllers\CommentController.php:3)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CWebApplication.php(276): CWebApplication->createController()
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#2 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#3 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php?r=comment/feed
+in D:\wamp\www\trackstar\protected\controllers\CommentController.php (3)
+in D:\wamp\www\trackstar\protected\controllers\CommentController.php (3)
+in D:\wamp\www\trackstar\index.php (13)
+2015/01/10 22:56:28 [error] [php] require_once(Zend/Feed/Reader/Extension/Atom.php): failed to open stream: No such file or directory (D:\wamp\www\trackstar\protected\controllers\CommentController.php:3)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CWebApplication.php(276): CWebApplication->createController()
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#2 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#3 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php?r=comment/feed
+in D:\wamp\www\trackstar\protected\controllers\CommentController.php (3)
+in D:\wamp\www\trackstar\protected\controllers\CommentController.php (3)
+in D:\wamp\www\trackstar\index.php (13)

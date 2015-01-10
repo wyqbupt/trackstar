@@ -12,6 +12,7 @@ return array(
 	// preloading 'log' component
 	'preload'=>array('log'),
 
+	
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
@@ -37,8 +38,8 @@ return array(
 		),
 
 		// uncomment the following to enable URLs in path-format
-		/*
-		'urlManager'=>array(
+		
+		/*'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
