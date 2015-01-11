@@ -1,66 +1,101 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Log
+ * @subpackage Filter
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Priority.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Log\Filter;
+/** Zend_Log_Filter_Abstract */
+require_once 'Zend/Log/Filter/Abstract.php';
 
-use Traversable;
-use Zend\Log\Exception;
-
-class Priority implements FilterInterface
+/**
+ * @category   Zend
+ * @package    Zend_Log
+ * @subpackage Filter
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Priority.php 23775 2011-03-01 17:25:24Z ralph $
+ */
+class Zend_Log_Filter_Priority extends Zend_Log_Filter_Abstract
 {
     /**
-     * @var int
+     * @var integer
      */
-    protected $priority;
+    protected $_priority;
 
     /**
      * @var string
      */
-    protected $operator;
+    protected $_operator;
 
     /**
-     * Filter logging by $priority. By default, it will accept any log
+     * Filter logging by $priority.  By default, it will accept any log
      * event whose priority value is less than or equal to $priority.
      *
-     * @param  int|array|Traversable $priority Priority
-     * @param  string $operator Comparison operator
-     * @return Priority
-     * @throws Exception\InvalidArgumentException
+     * @param  integer  $priority  Priority
+     * @param  string   $operator  Comparison operator
+     * @return void
+     * @throws Zend_Log_Exception
      */
     public function __construct($priority, $operator = null)
     {
-        if ($priority instanceof Traversable) {
-            $priority = iterator_to_array($priority);
-        }
-        if (is_array($priority)) {
-            $operator = isset($priority['operator']) ? $priority['operator'] : null;
-            $priority = isset($priority['priority']) ? $priority['priority'] : null;
-        }
-        if (!is_int($priority) && !ctype_digit($priority)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Priority must be a number, received "%s"',
-                gettype($priority)
-            ));
+        if (! is_int($priority)) {
+            require_once 'Zend/Log/Exception.php';
+            throw new Zend_Log_Exception('Priority must be an integer');
         }
 
-        $this->priority = (int) $priority;
-        $this->operator = $operator === null ? '<=' : $operator;
+        $this->_priority = $priority;
+        $this->_operator = $operator === null ? '<=' : $operator;
+    }
+
+    /**
+     * Create a new instance of Zend_Log_Filter_Priority
+     *
+     * @param  array|Zend_Config $config
+     * @return Zend_Log_Filter_Priority
+     */
+    static public function factory($config)
+    {
+        $config = self::_parseConfig($config);
+        $config = array_merge(array(
+            'priority' => null,
+            'operator' => null,
+        ), $config);
+
+        // Add support for constants
+        if (!is_numeric($config['priority']) && isset($config['priority']) && defined($config['priority'])) {
+            $config['priority'] = constant($config['priority']);
+        }
+
+        return new self(
+            (int) $config['priority'],
+            $config['operator']
+        );
     }
 
     /**
      * Returns TRUE to accept the message, FALSE to block it.
      *
-     * @param array $event event data
-     * @return bool accepted?
+     * @param  array    $event    event data
+     * @return boolean            accepted?
      */
-    public function filter(array $event)
+    public function accept($event)
     {
-        return version_compare($event['priority'], $this->priority, $this->operator);
+        return version_compare($event['priority'], $this->_priority, $this->_operator);
     }
 }

@@ -1,38 +1,49 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Filter
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: CamelCaseToSeparator.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Filter\Word;
+/**
+ * @see Zend_Filter_PregReplace
+ */
+require_once 'Zend/Filter/Word/Separator/Abstract.php';
 
-use Zend\Stdlib\StringUtils;
-
-class CamelCaseToSeparator extends AbstractSeparator
+/**
+ * @category   Zend
+ * @package    Zend_Filter
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Filter_Word_CamelCaseToSeparator extends Zend_Filter_Word_Separator_Abstract
 {
-    /**
-     * Defined by Zend\Filter\Filter
-     *
-     * @param  string|array $value
-     * @return string|array
-     */
+
     public function filter($value)
     {
-        if (!is_scalar($value) && !is_array($value)) {
-            return $value;
-        }
-
-        if (StringUtils::hasPcreUnicodeSupport()) {
-            $pattern     = array('#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#', '#(?<=(?:\p{Ll}|\p{Nd}))(\p{Lu})#');
-            $replacement = array($this->separator . '\1', $this->separator . '\1');
+        if (self::isUnicodeSupportEnabled()) {
+            parent::setMatchPattern(array('#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#','#(?<=(?:\p{Ll}|\p{Nd}))(\p{Lu})#'));
+            parent::setReplacement(array($this->_separator . '\1', $this->_separator . '\1'));
         } else {
-            $pattern     = array('#(?<=(?:[A-Z]))([A-Z]+)([A-Z][a-z])#', '#(?<=(?:[a-z0-9]))([A-Z])#');
-            $replacement = array('\1' . $this->separator . '\2', $this->separator . '\1');
+            parent::setMatchPattern(array('#(?<=(?:[A-Z]))([A-Z]+)([A-Z][A-z])#', '#(?<=(?:[a-z0-9]))([A-Z])#'));
+            parent::setReplacement(array('\1' . $this->_separator . '\2', $this->_separator . '\1'));
         }
 
-        return preg_replace($pattern, $replacement, $value);
+        return parent::filter($value);
     }
+
 }

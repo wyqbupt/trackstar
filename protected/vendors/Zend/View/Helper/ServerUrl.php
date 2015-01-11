@@ -1,63 +1,99 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: ServerUrl.php 23775 2011-03-01 17:25:24Z ralph $
  */
-
-namespace Zend\View\Helper;
 
 /**
  * Helper for returning the current server URL (optionally with request URI)
+ *
+ * @category   Zend
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class ServerUrl extends AbstractHelper
+class Zend_View_Helper_ServerUrl
 {
-    /**
-     * Host (including port)
-     *
-     * @var string
-     */
-    protected $host;
-
-    /**
-     * Port
-     *
-     * @var int
-     */
-    protected $port;
-
     /**
      * Scheme
      *
      * @var string
      */
-    protected $scheme;
+    protected $_scheme;
 
     /**
-     * Whether or not to query proxy servers for address
+     * Host (including port)
      *
-     * @var bool
+     * @var string
      */
-    protected $useProxy = false;
+    protected $_host;
+
+    /**
+     * Constructor
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        switch (true) {
+            case (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] === true)):
+            case (isset($_SERVER['HTTP_SCHEME']) && ($_SERVER['HTTP_SCHEME'] == 'https')):
+            case (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] == 443)):
+                $scheme = 'https';
+                break;
+            default:
+            $scheme = 'http';
+        }
+        $this->setScheme($scheme);
+
+        if (isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST'])) {
+            $this->setHost($_SERVER['HTTP_HOST']);
+        } else if (isset($_SERVER['SERVER_NAME'], $_SERVER['SERVER_PORT'])) {
+            $name = $_SERVER['SERVER_NAME'];
+            $port = $_SERVER['SERVER_PORT'];
+
+            if (($scheme == 'http' && $port == 80) ||
+                ($scheme == 'https' && $port == 443)) {
+                $this->setHost($name);
+            } else {
+                $this->setHost($name . ':' . $port);
+            }
+        }
+    }
 
     /**
      * View helper entry point:
      * Returns the current host's URL like http://site.com
      *
-     * @param  string|bool $requestUri  [optional] if true, the request URI
+     * @param  string|boolean $requestUri  [optional] if true, the request URI
      *                                     found in $_SERVER will be appended
      *                                     as a path. If a string is given, it
      *                                     will be appended as a path. Default
      *                                     is to not append any path.
-     * @return string
+     * @return string                      server url
      */
-    public function __invoke($requestUri = null)
+    public function serverUrl($requestUri = null)
     {
         if ($requestUri === true) {
             $path = $_SERVER['REQUEST_URI'];
-        } elseif (is_string($requestUri)) {
+        } else if (is_string($requestUri)) {
             $path = $requestUri;
         } else {
             $path = '';
@@ -67,264 +103,46 @@ class ServerUrl extends AbstractHelper
     }
 
     /**
-     * Detect the host based on headers
+     * Returns host
      *
-     * @return void
+     * @return string  host
      */
-    protected function detectHost()
+    public function getHost()
     {
-        if ($this->setHostFromProxy()) {
-            return;
-        }
-
-        if (isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST'])) {
-            // Detect if the port is set in SERVER_PORT and included in HTTP_HOST
-            if (isset($_SERVER['SERVER_PORT'])) {
-                $portStr = ':' . $_SERVER['SERVER_PORT'];
-                if (substr($_SERVER['HTTP_HOST'], 0-strlen($portStr), strlen($portStr)) == $portStr) {
-                    $this->setHost(substr($_SERVER['HTTP_HOST'], 0, 0-strlen($portStr)));
-                    return;
-                }
-            }
-
-            $this->setHost($_SERVER['HTTP_HOST']);
-
-            return;
-        }
-
-        if (!isset($_SERVER['SERVER_NAME']) || !isset($_SERVER['SERVER_PORT'])) {
-            return;
-        }
-
-        $name = $_SERVER['SERVER_NAME'];
-        $this->setHost($name);
-    }
-
-    /**
-     * Detect the port
-     *
-     * @return null
-     */
-    protected function detectPort()
-    {
-        if ($this->setPortFromProxy()) {
-            return;
-        }
-
-        if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT']) {
-            $this->setPort($_SERVER['SERVER_PORT']);
-            return;
-        }
-    }
-
-    /**
-     * Detect the scheme
-     *
-     * @return null
-     */
-    protected function detectScheme()
-    {
-        if ($this->setSchemeFromProxy()) {
-            return;
-        }
-
-        switch (true) {
-            case (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] === true)):
-            case (isset($_SERVER['HTTP_SCHEME']) && ($_SERVER['HTTP_SCHEME'] == 'https')):
-            case (443 === $this->getPort()):
-                $scheme = 'https';
-                break;
-            default:
-                $scheme = 'http';
-                break;
-        }
-
-        $this->setScheme($scheme);
-    }
-
-    /**
-     * Detect if a proxy is in use, and, if so, set the host based on it
-     *
-     * @return bool
-     */
-    protected function setHostFromProxy()
-    {
-        if (!$this->useProxy) {
-            return false;
-        }
-
-        if (!isset($_SERVER['HTTP_X_FORWARDED_HOST']) || empty($_SERVER['HTTP_X_FORWARDED_HOST'])) {
-            return false;
-        }
-
-        $host = $_SERVER['HTTP_X_FORWARDED_HOST'];
-        if (strpos($host, ',') !== false) {
-            $hosts = explode(',', $host);
-            $host = trim(array_pop($hosts));
-        }
-        if (empty($host)) {
-            return false;
-        }
-        $this->setHost($host);
-
-        return true;
-    }
-
-    /**
-     * Set port based on detected proxy headers
-     *
-     * @return bool
-     */
-    protected function setPortFromProxy()
-    {
-        if (!$this->useProxy) {
-            return false;
-        }
-
-        if (!isset($_SERVER['HTTP_X_FORWARDED_PORT']) || empty($_SERVER['HTTP_X_FORWARDED_PORT'])) {
-            return false;
-        }
-
-        $port = $_SERVER['HTTP_X_FORWARDED_PORT'];
-        $this->setPort($port);
-
-        return true;
-    }
-
-    /**
-     * Set the current scheme based on detected proxy headers
-     *
-     * @return bool
-     */
-    protected function setSchemeFromProxy()
-    {
-        if (!$this->useProxy) {
-            return false;
-        }
-
-        if (isset($_SERVER['SSL_HTTPS'])) {
-            $sslHttps = strtolower($_SERVER['SSL_HTTPS']);
-            if (in_array($sslHttps, array('on', 1))) {
-                $this->setScheme('https');
-                return true;
-            }
-        }
-
-        if (!isset($_SERVER['HTTP_X_FORWARDED_PROTO']) || empty($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
-            return false;
-        }
-
-        $scheme = trim(strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']));
-        if (empty($scheme)) {
-            return false;
-        }
-
-        $this->setScheme($scheme);
-
-        return true;
+        return $this->_host;
     }
 
     /**
      * Sets host
      *
-     * @param  string $host
-     * @return ServerUrl
+     * @param  string $host                new host
+     * @return Zend_View_Helper_ServerUrl  fluent interface, returns self
      */
     public function setHost($host)
     {
-        $port   = $this->getPort();
-        $scheme = $this->getScheme();
-
-        if (($scheme == 'http' && (null === $port || $port == 80))
-            || ($scheme == 'https' && (null === $port || $port == 443))
-        ) {
-            $this->host = $host;
-            return $this;
-        }
-
-        $this->host = $host . ':' . $port;
-
-        return $this;
-    }
-
-    /**
-     * Returns host
-     *
-     * @return string
-     */
-    public function getHost()
-    {
-        if (null === $this->host) {
-            $this->detectHost();
-        }
-
-        return $this->host;
-    }
-
-    /**
-     * Set server port
-     *
-     * @param  int $port
-     * @return ServerUrl
-     */
-    public function setPort($port)
-    {
-        $this->port = (int) $port;
-
-        return $this;
-    }
-
-    /**
-     * Retrieve the server port
-     *
-     * @return int|null
-     */
-    public function getPort()
-    {
-        if (null === $this->port) {
-            $this->detectPort();
-        }
-
-        return $this->port;
-    }
-
-    /**
-     * Sets scheme (typically http or https)
-     *
-     * @param  string $scheme
-     * @return ServerUrl
-     */
-    public function setScheme($scheme)
-    {
-        $this->scheme = $scheme;
-
+        $this->_host = $host;
         return $this;
     }
 
     /**
      * Returns scheme (typically http or https)
      *
-     * @return string
+     * @return string  scheme (typically http or https)
      */
     public function getScheme()
     {
-        if (null === $this->scheme) {
-            $this->detectScheme();
-        }
-
-        return $this->scheme;
+        return $this->_scheme;
     }
 
     /**
-     * Set flag indicating whether or not to query proxy servers
+     * Sets scheme (typically http or https)
      *
-     * @param  bool $useProxy
-     * @return ServerUrl
+     * @param  string $scheme              new scheme (typically http or https)
+     * @return Zend_View_Helper_ServerUrl  fluent interface, returns self
      */
-    public function setUseProxy($useProxy = false)
+    public function setScheme($scheme)
     {
-        $this->useProxy = (bool) $useProxy;
-
+        $this->_scheme = $scheme;
         return $this;
     }
 }

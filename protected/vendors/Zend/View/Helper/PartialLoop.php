@@ -1,28 +1,43 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: PartialLoop.php 23775 2011-03-01 17:25:24Z ralph $
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace Zend\View\Helper;
-
-use Traversable;
-use Zend\Stdlib\ArrayUtils;
-use Zend\View\Exception;
+/** Zend_View_Helper_Partial */
+require_once 'Zend/View/Helper/Partial.php';
 
 /**
  * Helper for rendering a template fragment in its own variable scope; iterates
  * over data provided and renders for each iteration.
+ *
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class PartialLoop extends Partial
+class Zend_View_Helper_PartialLoop extends Zend_View_Helper_Partial
 {
+
     /**
      * Marker to where the pointer is at in the loop
-     *
-     * @var int
+     * @var integer
      */
     protected $partialCounter = 0;
 
@@ -32,46 +47,52 @@ class PartialLoop extends Partial
      *
      * If no arguments are provided, returns object instance.
      *
-     * @param  string $name   Name of view script
-     * @param  array  $values Variables to populate in the view
-     * @throws Exception\InvalidArgumentException
+     * @param  string $name Name of view script
+     * @param  string|array $module If $model is empty, and $module is an array,
+     *                              these are the variables to populate in the
+     *                              view. Otherwise, the module in which the
+     *                              partial resides
+     * @param  array $model Variables to populate in the view
      * @return string
      */
-    public function __invoke($name = null, $values = null)
+    public function partialLoop($name = null, $module = null, $model = null)
     {
         if (0 == func_num_args()) {
             return $this;
         }
 
-        if (!is_array($values)) {
-            if ($values instanceof Traversable) {
-                $values = ArrayUtils::iteratorToArray($values, false);
-            } elseif (is_object($values) && method_exists($values, 'toArray')) {
-                $values = $values->toArray();
-            } else {
-                throw new Exception\InvalidArgumentException('PartialLoop helper requires iterable data');
-            }
+        if ((null === $model) && (null !== $module)) {
+            $model  = $module;
+            $module = null;
         }
 
-        // reset the counter if it's called again
-        $this->partialCounter = 0;
-        $content = '';
+        if (!is_array($model)
+            && (!$model instanceof Traversable)
+            && (is_object($model) && !method_exists($model, 'toArray'))
+        ) {
+            require_once 'Zend/View/Helper/Partial/Exception.php';
+            $e = new Zend_View_Helper_Partial_Exception('PartialLoop helper requires iterable data');
+            $e->setView($this->view);
+            throw $e;
+        }
 
-        foreach ($values as $item) {
+        if (is_object($model)
+            && (!$model instanceof Traversable)
+            && method_exists($model, 'toArray')
+        ) {
+            $model = $model->toArray();
+        }
+
+        $content = '';
+        // reset the counter if it's call again
+        $this->partialCounter = 0;
+        foreach ($model as $item) {
+            // increment the counter variable
             $this->partialCounter++;
-            $content .= parent::__invoke($name, $item);
+
+            $content .= $this->partial($name, $module, $item);
         }
 
         return $content;
-    }
-
-    /**
-     * Get the partial counter
-     *
-     * @return int
-     */
-    public function getPartialCounter()
-    {
-        return $this->partialCounter;
     }
 }

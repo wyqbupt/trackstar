@@ -1,42 +1,75 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Filter
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Digits.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Filter;
 
-use Zend\Stdlib\StringUtils;
+/**
+ * @see Zend_Filter_Interface
+ */
+require_once 'Zend/Filter/Interface.php';
 
-class Digits extends AbstractFilter
+
+/**
+ * @category   Zend
+ * @package    Zend_Filter
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Filter_Digits implements Zend_Filter_Interface
 {
     /**
-     * Defined by Zend\Filter\FilterInterface
+     * Is PCRE is compiled with UTF-8 and Unicode support
+     *
+     * @var mixed
+     **/
+    protected static $_unicodeEnabled;
+
+    /**
+     * Class constructor
+     *
+     * Checks if PCRE is compiled with UTF-8 and Unicode support
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (null === self::$_unicodeEnabled) {
+            self::$_unicodeEnabled = (@preg_match('/\pL/u', 'a')) ? true : false;
+        }
+    }
+
+    /**
+     * Defined by Zend_Filter_Interface
      *
      * Returns the string $value, removing all but digit characters
      *
-     * If the value provided is not integer, float or string, the value will remain unfiltered
-     *
      * @param  string $value
-     * @return string|mixed
+     * @return string
      */
     public function filter($value)
     {
-        if (is_int($value)) {
-            return (string) $value;
-        }
-        if (! (is_float($value) || is_string($value))) {
-            return $value;
-        }
-        $value = (string) $value;
-
-        if (!StringUtils::hasPcreUnicodeSupport()) {
+        if (!self::$_unicodeEnabled) {
             // POSIX named classes are not supported, use alternative 0-9 match
             $pattern = '/[^0-9]/';
-        } elseif (extension_loaded('mbstring')) {
+        } else if (extension_loaded('mbstring')) {
             // Filter for the value with mbstring
             $pattern = '/[^[:digit:]]/';
         } else {
@@ -44,6 +77,6 @@ class Digits extends AbstractFilter
             $pattern = '/[\p{^N}]/';
         }
 
-        return preg_replace($pattern, '', $value);
+        return preg_replace($pattern, '', (string) $value);
     }
 }

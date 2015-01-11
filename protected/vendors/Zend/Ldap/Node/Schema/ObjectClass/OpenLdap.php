@@ -1,35 +1,59 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Ldap
+ * @subpackage Schema
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: OpenLdap.php 23775 2011-03-01 17:25:24Z ralph $
  */
-
-namespace Zend\Ldap\Node\Schema\ObjectClass;
-
-use Zend\Ldap\Node\Schema;
 
 /**
- * Zend\Ldap\Node\Schema\ObjectClass\OpenLdap provides access to the objectClass
- * schema information on an OpenLDAP server.
+ * @see Zend_Ldap_Node_Schema_Item
  */
-class OpenLdap extends Schema\AbstractItem implements ObjectClassInterface
+require_once 'Zend/Ldap/Node/Schema/Item.php';
+/**
+ * @see Zend_Ldap_Node_Schema_ObjectClass_Interface
+ */
+require_once 'Zend/Ldap/Node/Schema/ObjectClass/Interface.php';
+
+/**
+ * Zend_Ldap_Node_Schema_ObjectClass_OpenLdap provides access to the objectClass
+ * schema information on an OpenLDAP server.
+ *
+ * @category   Zend
+ * @package    Zend_Ldap
+ * @subpackage Schema
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Ldap_Node_Schema_ObjectClass_OpenLdap extends Zend_Ldap_Node_Schema_Item
+    implements Zend_Ldap_Node_Schema_ObjectClass_Interface
 {
     /**
      * All inherited "MUST" attributes
      *
      * @var array
      */
-    protected $inheritedMust = null;
-
+    protected $_inheritedMust = null;
     /**
      * All inherited "MAY" attributes
      *
      * @var array
      */
-    protected $inheritedMay = null;
+    protected $_inheritedMay = null;
 
 
     /**
@@ -59,10 +83,10 @@ class OpenLdap extends Schema\AbstractItem implements ObjectClassInterface
      */
     public function getMustContain()
     {
-        if ($this->inheritedMust === null) {
-            $this->resolveInheritance();
+        if ($this->_inheritedMust === null) {
+            $this->_resolveInheritance();
         }
-        return $this->inheritedMust;
+        return $this->_inheritedMust;
     }
 
     /**
@@ -72,10 +96,10 @@ class OpenLdap extends Schema\AbstractItem implements ObjectClassInterface
      */
     public function getMayContain()
     {
-        if ($this->inheritedMay === null) {
-            $this->resolveInheritance();
+        if ($this->_inheritedMay === null) {
+            $this->_resolveInheritance();
         }
-        return $this->inheritedMay;
+        return $this->_inheritedMay;
     }
 
     /**
@@ -83,21 +107,21 @@ class OpenLdap extends Schema\AbstractItem implements ObjectClassInterface
      *
      * @return void
      */
-    protected function resolveInheritance()
+    protected function _resolveInheritance()
     {
         $must = $this->must;
-        $may  = $this->may;
+        $may = $this->may;
         foreach ($this->getParents() as $p) {
             $must = array_merge($must, $p->getMustContain());
-            $may  = array_merge($may, $p->getMayContain());
+            $may = array_merge($may, $p->getMayContain());
         }
         $must = array_unique($must);
-        $may  = array_unique($may);
-        $may  = array_diff($may, $must);
+        $may = array_unique($may);
+        $may = array_diff($may, $must);
         sort($must, SORT_STRING);
         sort($may, SORT_STRING);
-        $this->inheritedMust = $must;
-        $this->inheritedMay  = $may;
+        $this->_inheritedMust = $must;
+        $this->_inheritedMay = $may;
     }
 
     /**
@@ -113,19 +137,19 @@ class OpenLdap extends Schema\AbstractItem implements ObjectClassInterface
     /**
      * Gets the objectClass type
      *
-     * @return int
+     * @return integer
      */
     public function getType()
     {
         if ($this->structural) {
-            return Schema::OBJECTCLASS_TYPE_STRUCTURAL;
-        } elseif ($this->abstract) {
-            return Schema::OBJECTCLASS_TYPE_ABSTRACT;
-        } elseif ($this->auxiliary) {
-            return Schema::OBJECTCLASS_TYPE_AUXILIARY;
+            return Zend_Ldap_Node_Schema::OBJECTCLASS_TYPE_STRUCTURAL;
+        } else if ($this->abstract) {
+            return Zend_Ldap_Node_Schema::OBJECTCLASS_TYPE_ABSTRACT;
+        } else if ($this->auxiliary) {
+            return Zend_Ldap_Node_Schema::OBJECTCLASS_TYPE_AUXILIARY;
+        } else {
+            return Zend_Ldap_Node_Schema::OBJECTCLASS_TYPE_UNKNOWN;
         }
-
-        return Schema::OBJECTCLASS_TYPE_UNKNOWN;
     }
 
     /**
@@ -140,9 +164,9 @@ class OpenLdap extends Schema\AbstractItem implements ObjectClassInterface
     }
 
     /**
-     * Returns the parent object classes in the inheritance tree if one exists
+     * Returns the parent object classes in the inhertitance tree if one exists
      *
-     * @return array of OpenLdap
+     * @return array of Zend_Ldap_Node_Schema_ObjectClass_OpenLdap
      */
     public function getParents()
     {

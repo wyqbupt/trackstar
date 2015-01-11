@@ -1,17 +1,33 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Json
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Error.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Json\Server;
-
-class Error
+/**
+ * @category   Zend
+ * @package    Zend_Json
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Json_Server_Error
 {
-    const ERROR_PARSE           = -32700;
+    const ERROR_PARSE           = -32768;
     const ERROR_INVALID_REQUEST = -32600;
     const ERROR_INVALID_METHOD  = -32601;
     const ERROR_INVALID_PARAMS  = -32602;
@@ -19,22 +35,35 @@ class Error
     const ERROR_OTHER           = -32000;
 
     /**
+     * Allowed error codes
+     * @var array
+     */
+    protected $_allowedCodes = array(
+        self::ERROR_PARSE,
+        self::ERROR_INVALID_REQUEST,
+        self::ERROR_INVALID_METHOD,
+        self::ERROR_INVALID_PARAMS,
+        self::ERROR_INTERNAL,
+        self::ERROR_OTHER,
+    );
+
+    /**
      * Current code
      * @var int
      */
-    protected $code = self::ERROR_OTHER;
+    protected $_code = -32000;
 
     /**
      * Error data
      * @var mixed
      */
-    protected $data;
+    protected $_data;
 
     /**
      * Error message
      * @var string
      */
-    protected $message;
+    protected $_message;
 
     /**
      * Constructor
@@ -42,8 +71,9 @@ class Error
      * @param  string $message
      * @param  int $code
      * @param  mixed $data
+     * @return void
      */
-    public function __construct($message = null, $code = self::ERROR_OTHER, $data = null)
+    public function __construct($message = null, $code = -32000, $data = null)
     {
         $this->setMessage($message)
              ->setCode($code)
@@ -51,29 +81,22 @@ class Error
     }
 
     /**
-     * Set error code.
-     *
-     * If the error code is 0, it will be set to -32000 (ERROR_OTHER).
+     * Set error code
      *
      * @param  int $code
-     * @return \Zend\Json\Server\Error
+     * @return Zend_Json_Server_Error
      */
     public function setCode($code)
     {
-        if (!is_scalar($code) || is_bool($code) || is_float($code)) {
-            return $this;
-        }
-
-        if (is_string($code) && !is_numeric($code)) {
+        if (!is_scalar($code)) {
             return $this;
         }
 
         $code = (int) $code;
-
-        if (0 === $code) {
-            $this->code = self::ERROR_OTHER;
-        } else {
-            $this->code = $code;
+        if (in_array($code, $this->_allowedCodes)) {
+            $this->_code = $code;
+        } elseif (in_array($code, range(-32099, -32000))) {
+            $this->_code = $code;
         }
 
         return $this;
@@ -86,14 +109,14 @@ class Error
      */
     public function getCode()
     {
-        return $this->code;
+        return $this->_code;
     }
 
     /**
      * Set error message
      *
      * @param  string $message
-     * @return \Zend\Json\Server\Error
+     * @return Zend_Json_Server_Error
      */
     public function setMessage($message)
     {
@@ -101,7 +124,7 @@ class Error
             return $this;
         }
 
-        $this->message = (string) $message;
+        $this->_message = (string) $message;
         return $this;
     }
 
@@ -112,18 +135,18 @@ class Error
      */
     public function getMessage()
     {
-        return $this->message;
+        return $this->_message;
     }
 
     /**
      * Set error data
      *
      * @param  mixed $data
-     * @return \Zend\Json\Server\Error
+     * @return Zend_Json_Server_Error
      */
     public function setData($data)
     {
-        $this->data = $data;
+        $this->_data = $data;
         return $this;
     }
 
@@ -134,7 +157,7 @@ class Error
      */
     public function getData()
     {
-        return $this->data;
+        return $this->_data;
     }
 
     /**
@@ -158,7 +181,8 @@ class Error
      */
     public function toJson()
     {
-        return \Zend\Json\Json::encode($this->toArray());
+        require_once 'Zend/Json.php';
+        return Zend_Json::encode($this->toArray());
     }
 
     /**
@@ -171,3 +195,4 @@ class Error
         return $this->toJson();
     }
 }
+

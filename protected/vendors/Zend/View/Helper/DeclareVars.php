@@ -1,30 +1,48 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: DeclareVars.php 23775 2011-03-01 17:25:24Z ralph $
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace Zend\View\Helper;
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
 
 /**
  * Helper for declaring default values of template variables
+ *
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class DeclareVars extends AbstractHelper
+class Zend_View_Helper_DeclareVars extends Zend_View_Helper_Abstract
 {
     /**
      * The view object that created this helper object.
-     *
-     * @var \Zend\View\View
+     * @var Zend_View
      */
     public $view;
 
     /**
      * Declare template vars to set default values and avoid notices when using strictVars
      *
-     * Primarily for use when using {@link Zend\View\Variables::setStrictVars()},
+     * Primarily for use when using {@link Zend_View_Abstract::strictVars() Zend_View strictVars()},
      * this helper can be used to declare template variables that may or may
      * not already be set in the view object, as well as to set default values.
      * Arrays passed as arguments to the method will be used to set default
@@ -45,17 +63,16 @@ class DeclareVars extends AbstractHelper
      * @param string|array variable number of arguments, all string names of variables to test
      * @return void
      */
-    public function __invoke()
+    public function declareVars()
     {
-        $view = $this->getView();
         $args = func_get_args();
-        foreach ($args as $key) {
+        foreach($args as $key) {
             if (is_array($key)) {
                 foreach ($key as $name => $value) {
-                    $this->declareVar($name, $value);
+                    $this->_declareVar($name, $value);
                 }
-            } elseif (!isset($view->vars()->$key)) {
-                $this->declareVar($key);
+            } else if (!isset($view->$key)) {
+                $this->_declareVar($key);
             }
         }
     }
@@ -69,12 +86,10 @@ class DeclareVars extends AbstractHelper
      * @param  string $value Defaults to an empty string
      * @return void
      */
-    protected function declareVar($key, $value = '')
+    protected function _declareVar($key, $value = '')
     {
-        $view = $this->getView();
-        $vars = $view->vars();
-        if (!isset($vars->$key)) {
-            $vars->$key = $value;
+        if (!isset($this->view->$key)) {
+            $this->view->$key = $value;
         }
     }
 }

@@ -1,44 +1,63 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Feed_Reader
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Feed.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Feed\Reader\Extension\Syndication;
+/**
+ * @see Zend_Feed_Reader_Extension_FeedAbstract
+ */
+require_once 'Zend/Feed/Reader/Extension/FeedAbstract.php';
 
-use DateTime;
-use Zend\Feed\Reader;
-use Zend\Feed\Reader\Extension;
+require_once 'Zend/Date.php';
 
-class Feed extends Extension\AbstractFeed
+/**
+ * @category   Zend
+ * @package    Zend_Feed_Reader
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Feed_Reader_Extension_Syndication_Feed
+    extends Zend_Feed_Reader_Extension_FeedAbstract
 {
     /**
      * Get update period
-     *
      * @return string
-     * @throws Reader\Exception\InvalidArgumentException
      */
     public function getUpdatePeriod()
     {
         $name = 'updatePeriod';
-        $period = $this->getData($name);
+        $period = $this->_getData($name);
 
         if ($period === null) {
-            $this->data[$name] = 'daily';
+            $this->_data[$name] = 'daily';
             return 'daily'; //Default specified by spec
         }
 
-        switch ($period) {
+        switch ($period)
+        {
             case 'hourly':
             case 'daily':
             case 'weekly':
             case 'yearly':
                 return $period;
             default:
-                throw new Reader\Exception\InvalidArgumentException("Feed specified invalid update period: '$period'."
+                throw new Zend_Feed_Exception("Feed specified invalid update period: '$period'."
                     .  " Must be one of hourly, daily, weekly or yearly"
                 );
         }
@@ -46,16 +65,15 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get update frequency
-     *
      * @return int
      */
     public function getUpdateFrequency()
     {
         $name = 'updateFrequency';
-        $freq = $this->getData($name, 'number');
+        $freq = $this->_getData($name, 'number');
 
         if (!$freq || $freq < 1) {
-            $this->data[$name] = 1;
+            $this->_data[$name] = 1;
             return 1;
         }
 
@@ -64,32 +82,30 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get update frequency as ticks
-     *
      * @return int
      */
     public function getUpdateFrequencyAsTicks()
     {
         $name = 'updateFrequency';
-        $freq = $this->getData($name, 'number');
+        $freq = $this->_getData($name, 'number');
 
         if (!$freq || $freq < 1) {
-            $this->data[$name] = 1;
+            $this->_data[$name] = 1;
             $freq = 1;
         }
 
         $period = $this->getUpdatePeriod();
         $ticks = 1;
 
-        switch ($period) {
+        switch ($period)
+        {
+            //intentional fall through
             case 'yearly':
                 $ticks *= 52; //TODO: fix generalisation, how?
-                // no break
             case 'weekly':
                 $ticks *= 7;
-                // no break
             case 'daily':
                 $ticks *= 24;
-                // no break
             case 'hourly':
                 $ticks *= 3600;
                 break;
@@ -103,14 +119,15 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get update base
      *
-     * @return DateTime|null
+     * @return Zend_Date|null
      */
     public function getUpdateBase()
     {
-        $updateBase = $this->getData('updateBase');
+        $updateBase = $this->_getData('updateBase');
         $date = null;
         if ($updateBase) {
-            $date = DateTime::createFromFormat(DateTime::W3C, $updateBase);
+            $date = new Zend_Date;
+            $date->set($updateBase, Zend_Date::W3C);
         }
         return $date;
     }
@@ -122,19 +139,19 @@ class Feed extends Extension\AbstractFeed
      * @param string $type
      * @return mixed|null
      */
-    private function getData($name, $type = 'string')
+    private function _getData($name, $type = 'string')
     {
-        if (array_key_exists($name, $this->data)) {
-            return $this->data[$name];
+        if (array_key_exists($name, $this->_data)) {
+            return $this->_data[$name];
         }
 
-        $data = $this->xpath->evaluate($type . '(' . $this->getXpathPrefix() . '/syn10:' . $name . ')');
+        $data = $this->_xpath->evaluate($type . '(' . $this->getXpathPrefix() . '/syn10:' . $name . ')');
 
         if (!$data) {
             $data = null;
         }
 
-        $this->data[$name] = $data;
+        $this->_data[$name] = $data;
 
         return $data;
     }
@@ -144,8 +161,8 @@ class Feed extends Extension\AbstractFeed
      *
      * @return void
      */
-    protected function registerNamespaces()
+    protected function _registerNamespaces()
     {
-        $this->xpath->registerNamespace('syn10', 'http://purl.org/rss/1.0/modules/syndication/');
+        $this->_xpath->registerNamespace('syn10', 'http://purl.org/rss/1.0/modules/syndication/');
     }
 }

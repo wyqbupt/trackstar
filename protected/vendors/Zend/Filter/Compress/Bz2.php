@@ -1,20 +1,38 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Filter
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Bz2.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Filter\Compress;
-
-use Zend\Filter\Exception;
+/**
+ * @see Zend_Filter_Compress_CompressAbstract
+ */
+require_once 'Zend/Filter/Compress/CompressAbstract.php';
 
 /**
  * Compression adapter for Bz2
+ *
+ * @category   Zend
+ * @package    Zend_Filter
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Bz2 extends AbstractCompressionAlgorithm
+class Zend_Filter_Compress_Bz2 extends Zend_Filter_Compress_CompressAbstract
 {
     /**
      * Compression Options
@@ -25,7 +43,7 @@ class Bz2 extends AbstractCompressionAlgorithm
      *
      * @var array
      */
-    protected $options = array(
+    protected $_options = array(
         'blocksize' => 4,
         'archive'   => null,
     );
@@ -33,13 +51,13 @@ class Bz2 extends AbstractCompressionAlgorithm
     /**
      * Class constructor
      *
-     * @param null|array|\Traversable $options (Optional) Options to set
-     * @throws Exception\ExtensionNotLoadedException if bz2 extension not loaded
+     * @param array|Zend_Config $options (Optional) Options to set
      */
     public function __construct($options = null)
     {
         if (!extension_loaded('bz2')) {
-            throw new Exception\ExtensionNotLoadedException('This filter needs the bz2 extension');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('This filter needs the bz2 extension');
         }
         parent::__construct($options);
     }
@@ -47,27 +65,27 @@ class Bz2 extends AbstractCompressionAlgorithm
     /**
      * Returns the set blocksize
      *
-     * @return int
+     * @return integer
      */
     public function getBlocksize()
     {
-        return $this->options['blocksize'];
+        return $this->_options['blocksize'];
     }
 
     /**
      * Sets a new blocksize
      *
-     * @param  int $blocksize
-     * @throws Exception\InvalidArgumentException
-     * @return self
+     * @param integer $level
+     * @return Zend_Filter_Compress_Bz2
      */
     public function setBlocksize($blocksize)
     {
         if (($blocksize < 0) || ($blocksize > 9)) {
-            throw new Exception\InvalidArgumentException('Blocksize must be between 0 and 9');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('Blocksize must be between 0 and 9');
         }
 
-        $this->options['blocksize'] = (int) $blocksize;
+        $this->_options['blocksize'] = (int) $blocksize;
         return $this;
     }
 
@@ -78,18 +96,18 @@ class Bz2 extends AbstractCompressionAlgorithm
      */
     public function getArchive()
     {
-        return $this->options['archive'];
+        return $this->_options['archive'];
     }
 
     /**
      * Sets the archive to use for de-/compression
      *
-     * @param  string $archive Archive to use
-     * @return self
+     * @param string $archive Archive to use
+     * @return Zend_Filter_Compress_Bz2
      */
     public function setArchive($archive)
     {
-        $this->options['archive'] = (string) $archive;
+        $this->_options['archive'] = (string) $archive;
         return $this;
     }
 
@@ -98,7 +116,6 @@ class Bz2 extends AbstractCompressionAlgorithm
      *
      * @param  string $content
      * @return string
-     * @throws Exception\RuntimeException
      */
     public function compress($content)
     {
@@ -106,7 +123,8 @@ class Bz2 extends AbstractCompressionAlgorithm
         if (!empty($archive)) {
             $file = bzopen($archive, 'w');
             if (!$file) {
-                throw new Exception\RuntimeException("Error opening the archive '" . $archive . "'");
+                require_once 'Zend/Filter/Exception.php';
+                throw new Zend_Filter_Exception("Error opening the archive '" . $archive . "'");
             }
 
             bzwrite($file, $content);
@@ -117,7 +135,8 @@ class Bz2 extends AbstractCompressionAlgorithm
         }
 
         if (is_int($compressed)) {
-            throw new Exception\RuntimeException('Error during compression');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('Error during compression');
         }
 
         return $compressed;
@@ -128,21 +147,19 @@ class Bz2 extends AbstractCompressionAlgorithm
      *
      * @param  string $content
      * @return string
-     * @throws Exception\RuntimeException
      */
     public function decompress($content)
     {
         $archive = $this->getArchive();
-
-        //check if there are null byte characters before doing a file_exists check
-        if (!strstr($content, "\0") && file_exists($content)) {
+        if (file_exists($content)) {
             $archive = $content;
         }
 
         if (file_exists($archive)) {
             $file = bzopen($archive, 'r');
             if (!$file) {
-                throw new Exception\RuntimeException("Error opening the archive '" . $content . "'");
+                require_once 'Zend/Filter/Exception.php';
+                throw new Zend_Filter_Exception("Error opening the archive '" . $content . "'");
             }
 
             $compressed = bzread($file);
@@ -152,7 +169,8 @@ class Bz2 extends AbstractCompressionAlgorithm
         }
 
         if (is_int($compressed)) {
-            throw new Exception\RuntimeException('Error during decompression');
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('Error during decompression');
         }
 
         return $compressed;

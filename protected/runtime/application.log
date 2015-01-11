@@ -2360,3 +2360,378 @@ REQUEST_URI=/trackstar/index.php?r=comment/feed
 in D:\wamp\www\trackstar\protected\controllers\CommentController.php (3)
 in D:\wamp\www\trackstar\protected\controllers\CommentController.php (3)
 in D:\wamp\www\trackstar\index.php (13)
+2015/01/11 16:17:22 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in D:\wamp\www\yii\framework\web\CController.php:336
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('view')
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('issue/view')
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/trackstar/index.php?r=issue/view
+HTTP_REFERER=http://localhost/trackstar/index.php?r=site/login
+---
+2015/01/11 16:17:32 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in D:\wamp\www\yii\framework\web\CController.php:336
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('view')
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('issue/view')
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/trackstar/index.php?r=issue/view
+---
+2015/01/11 16:17:47 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in D:\wamp\www\yii\framework\web\CController.php:336
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('view')
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('issue/view')
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/trackstar/index.php?r=issue/view
+---
+2015/01/11 16:19:04 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in D:\wamp\www\yii\framework\web\CController.php:336
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('view')
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('issue/view')
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/trackstar/index.php?r=issue/view
+HTTP_REFERER=http://localhost/trackstar/index.php?r=site/login
+---
+2015/01/11 16:21:22 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in D:\wamp\www\yii\framework\web\CController.php:336
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('view')
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('comment/view')
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/trackstar/index.php?r=comment/view
+---
+2015/01/11 16:21:22 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in D:\wamp\www\yii\framework\web\CController.php:336
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('view')
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('comment/view')
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/trackstar/index.php?r=comment/view
+---
+2015/01/11 16:21:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "list".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction('list')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('list')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('comment/list')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php?r=comment/list
+---
+2015/01/11 16:21:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "list".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction('list')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('list')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('comment/list')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php?r=comment/list
+---
+2015/01/11 16:22:13 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in D:\wamp\www\yii\framework\web\CController.php:336
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('view')
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('comment/view')
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/trackstar/index.php?r=comment/view
+---
+2015/01/11 16:22:54 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in D:\wamp\www\yii\framework\web\CController.php:336
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('view')
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('issue/view')
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/trackstar/index.php?r=issue/view
+---
+2015/01/11 16:22:58 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in D:\wamp\www\yii\framework\web\CController.php:336
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('view')
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('comment/view')
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/trackstar/index.php?r=comment/view
+---
+2015/01/11 16:23:00 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in D:\wamp\www\yii\framework\web\CController.php:336
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('view')
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('comment/view')
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/trackstar/index.php?r=comment/view
+---
+2015/01/11 16:23:01 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in D:\wamp\www\yii\framework\web\CController.php:336
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(309): CController->invalidActionParams(Object(CInlineAction))
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('view')
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('issue/view')
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/trackstar/index.php?r=issue/view
+---
+2015/01/11 16:23:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested project does not exist.' in D:\wamp\www\trackstar\protected\controllers\IssueController.php:18
+Stack trace:
+#0 D:\wamp\www\trackstar\protected\controllers\IssueController.php(230): IssueController->loadProject(NULL)
+#1 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): IssueController->filterProjectContext(Object(CFilterChain))
+#2 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#3 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#4 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#7 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#8 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('index')
+#10 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('issue/index')
+#11 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#12 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#13 {main}
+REQUEST_URI=/trackstar/index.php?r=issue/index
+---
+2015/01/11 16:23:05 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested project does not exist.' in D:\wamp\www\trackstar\protected\controllers\IssueController.php:18
+Stack trace:
+#0 D:\wamp\www\trackstar\protected\controllers\IssueController.php(230): IssueController->loadProject(NULL)
+#1 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): IssueController->filterProjectContext(Object(CFilterChain))
+#2 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#3 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#4 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#6 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#7 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#8 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('index')
+#10 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('issue/index')
+#11 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#12 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#13 {main}
+REQUEST_URI=/trackstar/index.php?r=issue/index
+---
+2015/01/11 16:23:57 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in D:\wamp\www\yii\framework\web\auth\CAccessControlFilter.php:182
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\auth\CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 D:\wamp\www\yii\framework\web\filters\CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('admin')
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('issue/admin')
+#9 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#10 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/trackstar/index.php?r=issue/admin&pid=2
+HTTP_REFERER=http://localhost/trackstar/index.php?r=issue/view&id=9
+---
+2015/01/11 16:23:57 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in D:\wamp\www\yii\framework\web\auth\CAccessControlFilter.php:182
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\auth\CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 D:\wamp\www\yii\framework\web\filters\CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('admin')
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('issue/admin')
+#9 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#10 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/trackstar/index.php?r=issue/admin&pid=2
+---
+2015/01/11 16:25:01 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in D:\wamp\www\yii\framework\web\auth\CAccessControlFilter.php:182
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\auth\CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 D:\wamp\www\yii\framework\web\filters\CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('admin')
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('comment/admin')
+#9 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#10 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/trackstar/index.php?r=comment/admin
+HTTP_REFERER=http://localhost/trackstar/index.php?r=comment
+---
+2015/01/11 16:25:02 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not authorized to perform this action.' in D:\wamp\www\yii\framework\web\auth\CAccessControlFilter.php:182
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\auth\CAccessControlFilter.php(145): CAccessControlFilter->accessDenied(Object(CWebUser), 'You are not aut...')
+#1 D:\wamp\www\yii\framework\web\filters\CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#2 D:\wamp\www\yii\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#3 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#4 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#5 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\wamp\www\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('admin')
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('comment/admin')
+#9 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#10 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#11 {main}
+REQUEST_URI=/trackstar/index.php?r=comment/admin
+---
+2015/01/11 16:25:14 [error] [php] Trying to get property of non-object (D:\wamp\www\trackstar\protected\controllers\CommentController.php:161)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CommentController->runAction()
+#1 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#2 D:\wamp\www\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#3 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CommentController->filterAccessControl()
+#4 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#5 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\wamp\www\yii\framework\web\CController.php(265): CommentController->runActionWithFilters()
+#7 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CommentController->run()
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#10 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php?r=comment/feed
+in D:\wamp\www\trackstar\protected\controllers\CommentController.php (161)
+in D:\wamp\www\trackstar\index.php (13)
+2015/01/11 16:25:47 [error] [php] Trying to get property of non-object (D:\wamp\www\trackstar\protected\controllers\CommentController.php:161)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CommentController->runAction()
+#1 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#2 D:\wamp\www\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#3 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CommentController->filterAccessControl()
+#4 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#5 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\wamp\www\yii\framework\web\CController.php(265): CommentController->runActionWithFilters()
+#7 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CommentController->run()
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#10 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php?r=comment/feed
+in D:\wamp\www\trackstar\protected\controllers\CommentController.php (161)
+in D:\wamp\www\trackstar\index.php (13)
+2015/01/11 16:25:55 [error] [php] Trying to get property of non-object (D:\wamp\www\trackstar\protected\controllers\CommentController.php:161)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CommentController->runAction()
+#1 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#2 D:\wamp\www\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#3 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CommentController->filterAccessControl()
+#4 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#5 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\wamp\www\yii\framework\web\CController.php(265): CommentController->runActionWithFilters()
+#7 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CommentController->run()
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#10 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php?r=comment/feed
+in D:\wamp\www\trackstar\protected\controllers\CommentController.php (161)
+in D:\wamp\www\trackstar\index.php (13)
+2015/01/11 16:26:05 [error] [php] Trying to get property of non-object (D:\wamp\www\trackstar\protected\controllers\CommentController.php:161)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): CommentController->runAction()
+#1 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#2 D:\wamp\www\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#3 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): CommentController->filterAccessControl()
+#4 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#5 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 D:\wamp\www\yii\framework\web\CController.php(265): CommentController->runActionWithFilters()
+#7 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CommentController->run()
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#10 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php?r=comment/feed
+in D:\wamp\www\trackstar\protected\controllers\CommentController.php (161)
+in D:\wamp\www\trackstar\index.php (13)

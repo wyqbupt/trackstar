@@ -1,28 +1,44 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Feed_Writer
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Source.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Feed\Writer\Renderer\Feed\Atom;
+require_once 'Zend/Feed/Writer/Renderer/Feed/Atom/AtomAbstract.php';
 
-use DOMDocument;
-use DOMElement;
-use Zend\Feed\Writer;
-use Zend\Feed\Writer\Renderer;
-
-class Source extends AbstractAtom implements Renderer\RendererInterface
+/**
+ * @category   Zend
+ * @package    Zend_Feed_Writer
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Feed_Writer_Renderer_Feed_Atom_Source
+    extends Zend_Feed_Writer_Renderer_Feed_Atom_AtomAbstract
+    implements Zend_Feed_Writer_Renderer_RendererInterface
 {
 
     /**
      * Constructor
      *
-     * @param  Writer\Source $container
+     * @param  Zend_Feed_Writer_Feed_Source $container
+     * @return void
      */
-    public function __construct(Writer\Source $container)
+    public function __construct (Zend_Feed_Writer_Source $container)
     {
         parent::__construct($container);
     }
@@ -30,33 +46,33 @@ class Source extends AbstractAtom implements Renderer\RendererInterface
     /**
      * Render Atom Feed Metadata (Source element)
      *
-     * @return Writer\Renderer\Feed\Atom
+     * @return Zend_Feed_Writer_Renderer_Feed_Atom
      */
     public function render()
     {
-        if (!$this->container->getEncoding()) {
-            $this->container->setEncoding('UTF-8');
+        if (!$this->_container->getEncoding()) {
+            $this->_container->setEncoding('UTF-8');
         }
-        $this->dom = new DOMDocument('1.0', $this->container->getEncoding());
-        $this->dom->formatOutput = true;
-        $root = $this->dom->createElement('source');
+        $this->_dom = new DOMDocument('1.0', $this->_container->getEncoding());
+        $this->_dom->formatOutput = true;
+        $root = $this->_dom->createElement('source');
         $this->setRootElement($root);
-        $this->dom->appendChild($root);
-        $this->_setLanguage($this->dom, $root);
-        $this->_setBaseUrl($this->dom, $root);
-        $this->_setTitle($this->dom, $root);
-        $this->_setDescription($this->dom, $root);
-        $this->_setDateCreated($this->dom, $root);
-        $this->_setDateModified($this->dom, $root);
-        $this->_setGenerator($this->dom, $root);
-        $this->_setLink($this->dom, $root);
-        $this->_setFeedLinks($this->dom, $root);
-        $this->_setId($this->dom, $root);
-        $this->_setAuthors($this->dom, $root);
-        $this->_setCopyright($this->dom, $root);
-        $this->_setCategories($this->dom, $root);
+        $this->_dom->appendChild($root);
+        $this->_setLanguage($this->_dom, $root);
+        $this->_setBaseUrl($this->_dom, $root);
+        $this->_setTitle($this->_dom, $root);
+        $this->_setDescription($this->_dom, $root);
+        $this->_setDateCreated($this->_dom, $root);
+        $this->_setDateModified($this->_dom, $root);
+        $this->_setGenerator($this->_dom, $root);
+        $this->_setLink($this->_dom, $root);
+        $this->_setFeedLinks($this->_dom, $root);
+        $this->_setId($this->_dom, $root);
+        $this->_setAuthors($this->_dom, $root);
+        $this->_setCopyright($this->_dom, $root);
+        $this->_setCategories($this->_dom, $root);
 
-        foreach ($this->extensions as $ext) {
+        foreach ($this->_extensions as $ext) {
             $ext->setType($this->getType());
             $ext->setRootElement($this->getRootElement());
             $ext->setDomDocument($this->getDomDocument(), $root);
@@ -74,7 +90,7 @@ class Source extends AbstractAtom implements Renderer\RendererInterface
      */
     protected function _setGenerator(DOMDocument $dom, DOMElement $root)
     {
-        if (!$this->getDataContainer()->getGenerator()) {
+        if(!$this->getDataContainer()->getGenerator()) {
             return;
         }
 
@@ -90,4 +106,5 @@ class Source extends AbstractAtom implements Renderer\RendererInterface
             $generator->setAttribute('version', $gdata['version']);
         }
     }
+
 }

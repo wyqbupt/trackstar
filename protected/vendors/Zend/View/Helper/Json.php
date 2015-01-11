@@ -1,55 +1,80 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: Json.php 23775 2011-03-01 17:25:24Z ralph $
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace Zend\View\Helper;
+/** Zend_Json */
+require_once 'Zend/Json.php';
 
-use Zend\Http\Response;
-use Zend\Json\Json as JsonFormatter;
+/** Zend_Controller_Front */
+require_once 'Zend/Controller/Front.php';
+
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
 
 /**
  * Helper for simplifying JSON responses
+ *
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Json extends AbstractHelper
+class Zend_View_Helper_Json extends Zend_View_Helper_Abstract
 {
     /**
-     * @var Response
-     */
-    protected $response;
-
-    /**
-     * Encode data as JSON and set response header
+     * Encode data as JSON, disable layouts, and set response header
+     *
+     * If $keepLayouts is true, does not disable layouts.
      *
      * @param  mixed $data
-     * @param  array $jsonOptions Options to pass to JsonFormatter::encode()
+     * @param  bool $keepLayouts
+     * NOTE:   if boolean, establish $keepLayouts to true|false
+     *         if array, admit params for Zend_Json::encode as enableJsonExprFinder=>true|false
+     *         this array can contains a 'keepLayout'=>true|false
+     *         that will not be passed to Zend_Json::encode method but will be used here
      * @return string|void
      */
-    public function __invoke($data, array $jsonOptions = array())
+    public function json($data, $keepLayouts = false)
     {
-        $data = JsonFormatter::encode($data, null, $jsonOptions);
-
-        if ($this->response instanceof Response) {
-            $headers = $this->response->getHeaders();
-            $headers->addHeaderLine('Content-Type', 'application/json');
+        $options = array();
+        if (is_array($keepLayouts))
+        {
+            $options     = $keepLayouts;
+            $keepLayouts = (array_key_exists('keepLayouts', $keepLayouts))
+                            ? $keepLayouts['keepLayouts']
+                            : false;
+            unset($options['keepLayouts']);
         }
 
-        return $data;
-    }
+        $data = Zend_Json::encode($data, null, $options);
+        if (!$keepLayouts) {
+            require_once 'Zend/Layout.php';
+            $layout = Zend_Layout::getMvcInstance();
+            if ($layout instanceof Zend_Layout) {
+                $layout->disableLayout();
+            }
+        }
 
-    /**
-     * Set the response object
-     *
-     * @param  Response $response
-     * @return Json
-     */
-    public function setResponse(Response $response)
-    {
-        $this->response = $response;
-        return $this;
+        $response = Zend_Controller_Front::getInstance()->getResponse();
+        $response->setHeader('Content-Type', 'application/json', true);
+        return $data;
     }
 }

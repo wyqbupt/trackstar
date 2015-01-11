@@ -1,20 +1,31 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Paginator
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: SerializableLimitIterator.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Paginator;
-
-use ArrayAccess;
-use Iterator;
-use LimitIterator;
-use Serializable;
-
-class SerializableLimitIterator extends LimitIterator implements Serializable, ArrayAccess
+/**
+ * @category   Zend
+ * @package    Zend_Paginator
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Paginator_SerializableLimitIterator extends LimitIterator implements Serializable, ArrayAccess
 {
 
     /**
@@ -22,28 +33,28 @@ class SerializableLimitIterator extends LimitIterator implements Serializable, A
      *
      * @var int
      */
-    private $offset;
+    private $_offset;
 
     /**
      * Maximum number of elements to show or -1 for all
      *
      * @var int
      */
-    private $count;
+    private $_count;
 
     /**
-     * Construct a Zend\Paginator\SerializableLimitIterator
+     * Construct a Zend_Paginator_SerializableLimitIterator
      *
      * @param Iterator $it Iterator to limit (must be serializable by un-/serialize)
      * @param int $offset Offset to first element
      * @param int $count Maximum number of elements to show or -1 for all
      * @see LimitIterator::__construct
      */
-    public function __construct(Iterator $it, $offset=0, $count=-1)
+    public function __construct (Iterator $it, $offset=0, $count=-1)
     {
         parent::__construct($it, $offset, $count);
-        $this->offset = $offset;
-        $this->count = $count;
+        $this->_offset = $offset;
+        $this->_count = $count;
     }
 
     /**
@@ -53,15 +64,14 @@ class SerializableLimitIterator extends LimitIterator implements Serializable, A
     {
         return serialize(array(
             'it'     => $this->getInnerIterator(),
-            'offset' => $this->offset,
-            'count'  => $this->count,
+            'offset' => $this->_offset,
+            'count'  => $this->_count,
             'pos'    => $this->getPosition(),
         ));
     }
 
     /**
      * @param string $data representation of the instance
-     * @return void
      */
     public function unserialize($data)
     {
@@ -100,19 +110,19 @@ class SerializableLimitIterator extends LimitIterator implements Serializable, A
      * Determine if a value of Iterator is set and is not NULL
      *
      * @param int $offset
-     * @return bool
      */
     public function offsetExists($offset)
     {
-        if ($offset > 0 && $offset < $this->count) {
+        if ($offset > 0 && $offset < $this->_count) {
             try {
                 $currentOffset = $this->key();
                 $this->seek($offset);
                 $current = $this->current();
                 $this->seek($currentOffset);
                 return null !== $current;
-            } catch (\OutOfBoundsException $e) {
+            } catch (OutOfBoundsException $e) {
                 // reset position in case of exception is assigned null
+                $this->rewind();
                 $this->seek($currentOffset);
                 return false;
             }

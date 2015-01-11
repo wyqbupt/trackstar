@@ -1,42 +1,73 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Server
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace Zend\Server\Reflection;
+/**
+ * Zend_Server_Reflection_ReturnValue
+ */
+require_once 'Zend/Server/Reflection/ReturnValue.php';
+
+/**
+ * Zend_Server_Reflection_Parameter
+ */
+require_once 'Zend/Server/Reflection/Parameter.php';
 
 /**
  * Method/Function prototypes
  *
  * Contains accessors for the return value and all method arguments.
+ *
+ * @category   Zend
+ * @package    Zend_Server
+ * @subpackage Reflection
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version $Id: Prototype.php 23775 2011-03-01 17:25:24Z ralph $
  */
-class Prototype
+class Zend_Server_Reflection_Prototype
 {
-    /** @var ReflectionParameter[] */
-    protected $params;
-
     /**
      * Constructor
      *
-     * @param ReflectionReturnValue $return
-     * @param ReflectionParameter[] $params
-     * @throws Exception\InvalidArgumentException
+     * @param Zend_Server_Reflection_ReturnValue $return
+     * @param array $params
+     * @return void
      */
-    public function __construct(ReflectionReturnValue $return, array $params = array())
+    public function __construct(Zend_Server_Reflection_ReturnValue $return, $params = null)
     {
-        $this->return = $return;
+        $this->_return = $return;
 
-        foreach ($params as $param) {
-            if (!$param instanceof ReflectionParameter) {
-                throw new Exception\InvalidArgumentException('One or more params are invalid');
+        if (!is_array($params) && (null !== $params)) {
+            require_once 'Zend/Server/Reflection/Exception.php';
+            throw new Zend_Server_Reflection_Exception('Invalid parameters');
+        }
+
+        if (is_array($params)) {
+            foreach ($params as $param) {
+                if (!$param instanceof Zend_Server_Reflection_Parameter) {
+                    require_once 'Zend/Server/Reflection/Exception.php';
+                    throw new Zend_Server_Reflection_Exception('One or more params are invalid');
+                }
             }
         }
 
-        $this->params = $params;
+        $this->_params = $params;
     }
 
     /**
@@ -46,26 +77,27 @@ class Prototype
      */
     public function getReturnType()
     {
-        return $this->return->getType();
+        return $this->_return->getType();
     }
 
     /**
      * Retrieve the return value object
      *
-     * @return \Zend\Server\Reflection\ReflectionReturnValue
+     * @access public
+     * @return Zend_Server_Reflection_ReturnValue
      */
     public function getReturnValue()
     {
-        return $this->return;
+        return $this->_return;
     }
 
     /**
      * Retrieve method parameters
      *
-     * @return ReflectionParameter[] Array of {@link \Zend\Server\Reflection\ReflectionParameter}s
+     * @return array Array of {@link Zend_Server_Reflection_Parameter}s
      */
     public function getParameters()
     {
-        return $this->params;
+        return $this->_params;
     }
 }

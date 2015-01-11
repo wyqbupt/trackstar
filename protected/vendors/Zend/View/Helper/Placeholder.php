@@ -1,98 +1,87 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: Placeholder.php 23775 2011-03-01 17:25:24Z ralph $
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace Zend\View\Helper;
+/** Zend_View_Helper_Placeholder_Registry */
+require_once 'Zend/View/Helper/Placeholder/Registry.php';
 
-use Zend\View\Exception\InvalidArgumentException;
-use Zend\View\Helper\Placeholder\Container;
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
 
 /**
  * Helper for passing data between otherwise segregated Views. It's called
  * Placeholder to make its typical usage obvious, but can be used just as easily
  * for non-Placeholder things. That said, the support for this is only
  * guaranteed to effect subsequently rendered templates, and of course Layouts.
+ *
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Placeholder extends AbstractHelper
+class Zend_View_Helper_Placeholder extends Zend_View_Helper_Abstract
 {
     /**
      * Placeholder items
-     *
      * @var array
      */
-    protected $items = array();
+    protected $_items = array();
 
     /**
-     * Default container class
-     * @var string
+     * @var Zend_View_Helper_Placeholder_Registry
      */
-    protected $containerClass = 'Zend\View\Helper\Placeholder\Container';
+    protected $_registry;
+
+    /**
+     * Constructor
+     *
+     * Retrieve container registry from Zend_Registry, or create new one and register it.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->_registry = Zend_View_Helper_Placeholder_Registry::getRegistry();
+    }
+
 
     /**
      * Placeholder helper
      *
      * @param  string $name
-     * @throws InvalidArgumentException
-     * @return Placeholder\Container\AbstractContainer
+     * @return Zend_View_Helper_Placeholder_Container_Abstract
      */
-    public function __invoke($name = null)
+    public function placeholder($name)
     {
-        if ($name == null) {
-            throw new InvalidArgumentException('Placeholder: missing argument.  $name is required by placeholder($name)');
-        }
-
         $name = (string) $name;
-        return $this->getContainer($name);
+        return $this->_registry->getContainer($name);
     }
 
     /**
-     * createContainer
+     * Retrieve the registry
      *
-     * @param  string $key
-     * @param  array $value
-     * @return Container\AbstractContainer
+     * @return Zend_View_Helper_Placeholder_Registry
      */
-    public function createContainer($key, array $value = array())
+    public function getRegistry()
     {
-        $key = (string) $key;
-
-        $this->items[$key] = new $this->containerClass($value);
-        return $this->items[$key];
-    }
-
-    /**
-     * Retrieve a placeholder container
-     *
-     * @param  string $key
-     * @return Container\AbstractContainer
-     */
-    public function getContainer($key)
-    {
-        $key = (string) $key;
-        if (isset($this->items[$key])) {
-            return $this->items[$key];
-        }
-
-        $container = $this->createContainer($key);
-
-        return $container;
-    }
-
-    /**
-     * Does a particular container exist?
-     *
-     * @param  string $key
-     * @return bool
-     */
-    public function containerExists($key)
-    {
-        $key = (string) $key;
-        $return =  array_key_exists($key, $this->items);
-        return $return;
+        return $this->_registry;
     }
 }

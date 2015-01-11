@@ -1,53 +1,64 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Navigation
+ * @subpackage Page
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Uri.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Navigation\Page;
-
-use Zend\Http\Request;
-use Zend\Navigation\Exception;
+/**
+ * @see Zend_Navigation_Page_Abstract
+ */
+require_once 'Zend/Navigation/Page.php';
 
 /**
  * Represents a page that is defined by specifying a URI
+ *
+ * @category   Zend
+ * @package    Zend_Navigation
+ * @subpackage Page
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Uri extends AbstractPage
+class Zend_Navigation_Page_Uri extends Zend_Navigation_Page
 {
     /**
      * Page URI
      *
      * @var string|null
      */
-    protected $uri = null;
-
-    /**
-     * Request object used to determine uri path
-     *
-     * @var string
-     */
-    protected $request;
+    protected $_uri = null;
 
     /**
      * Sets page URI
      *
      * @param  string $uri                page URI, must a string or null
-     *
-     * @return Uri   fluent interface, returns self
-     * @throws Exception\InvalidArgumentException  if $uri is invalid
+     * @return Zend_Navigation_Page_Uri   fluent interface, returns self
+     * @throws Zend_Navigation_Exception  if $uri is invalid
      */
     public function setUri($uri)
     {
         if (null !== $uri && !is_string($uri)) {
-            throw new Exception\InvalidArgumentException(
-                'Invalid argument: $uri must be a string or null'
-            );
+            require_once 'Zend/Navigation/Exception.php';
+            throw new Zend_Navigation_Exception(
+                    'Invalid argument: $uri must be a string or null');
         }
 
-        $this->uri = $uri;
+        $this->_uri = $uri;
         return $this;
     }
 
@@ -58,78 +69,20 @@ class Uri extends AbstractPage
      */
     public function getUri()
     {
-        return $this->uri;
+        return $this->_uri;
     }
 
     /**
      * Returns href for this page
      *
-     * Includes the fragment identifier if it is set.
-     *
      * @return string
      */
     public function getHref()
     {
-        $uri = $this->getUri();
-
-        $fragment = $this->getFragment();
-        if (null !== $fragment) {
-            if ('#' == substr($uri, -1)) {
-                return $uri . $fragment;
-            } else {
-                return $uri . '#' . $fragment;
-            }
-        }
-
-        return $uri;
+        return $this->getUri();
     }
 
-    /**
-     * Returns whether page should be considered active or not
-     *
-     * This method will compare the page properties against the request uri.
-     *
-     * @param bool $recursive
-     *            [optional] whether page should be considered
-     *            active if any child pages are active. Default is
-     *            false.
-     * @return bool whether page should be considered active or not
-     */
-    public function isActive($recursive = false)
-    {
-        if (!$this->active) {
-            if ($this->getRequest() instanceof Request) {
-                if ($this->getRequest()->getUri()->getPath() == $this->getUri()) {
-                    $this->active = true;
-                    return true;
-                }
-            }
-        }
-
-        return parent::isActive($recursive);
-    }
-
-    /**
-     * Get the request
-     *
-     * @return Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     * Sets request for assembling URLs
-     *
-     * @param Request $request
-     * @return self Fluent interface, returns self
-     */
-    public function setRequest(Request $request = null)
-    {
-        $this->request = $request;
-        return $this;
-    }
+    // Public methods:
 
     /**
      * Returns an array representation of the page
@@ -141,8 +94,7 @@ class Uri extends AbstractPage
         return array_merge(
             parent::toArray(),
             array(
-                'uri' => $this->getUri(),
-            )
-        );
+                'uri' => $this->getUri()
+            ));
     }
 }

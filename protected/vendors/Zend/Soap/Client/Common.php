@@ -1,61 +1,76 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Soap
+ * @subpackage Client
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Common.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Soap\Client;
-
-use SoapClient;
 
 if (extension_loaded('soap')) {
 
-class Common extends SoapClient
+/**
+ * @category   Zend
+ * @package    Zend_Soap
+ * @subpackage Client
+ */
+class Zend_Soap_Client_Common extends SoapClient
 {
     /**
      * doRequest() pre-processing method
      *
-     * @var callable
+     * @var callback
      */
-    protected $doRequestCallback;
+    protected $_doRequestCallback;
 
     /**
      * Common Soap Client constructor
      *
-     * @param callable $doRequestCallback
+     * @param callback $doRequestMethod
      * @param string $wsdl
      * @param array $options
      */
-    public function __construct($doRequestCallback, $wsdl, $options)
+    function __construct($doRequestCallback, $wsdl, $options)
     {
-        $this->doRequestCallback = $doRequestCallback;
+        $this->_doRequestCallback = $doRequestCallback;
+
         parent::__construct($wsdl, $options);
     }
 
     /**
      * Performs SOAP request over HTTP.
-     * Overridden to implement different transport layers, perform additional
-     * XML processing or other purpose.
+     * Overridden to implement different transport layers, perform additional XML processing or other purpose.
      *
-     * @param  string $request
-     * @param  string $location
-     * @param  string $action
-     * @param  int    $version
-     * @param  int    $oneWay
+     * @param string $request
+     * @param string $location
+     * @param string $action
+     * @param int    $version
+     * @param int    $one_way
      * @return mixed
      */
-    public function __doRequest($request, $location, $action, $version, $oneWay = null)
+    function __doRequest($request, $location, $action, $version, $one_way = null)
     {
-        // ltrim is a workaround for https://bugs.php.net/bug.php?id=63780
-        if ($oneWay === null) {
-            return call_user_func($this->doRequestCallback, $this, ltrim($request), $location, $action, $version);
+        if ($one_way === null) {
+            return call_user_func($this->_doRequestCallback, $this, $request, $location, $action, $version);
+        } else {
+            return call_user_func($this->_doRequestCallback, $this, $request, $location, $action, $version, $one_way);
         }
-
-        return call_user_func($this->doRequestCallback, $this, ltrim($request), $location, $action, $version, $oneWay);
     }
+
 }
 
 } // end if (extension_loaded('soap')

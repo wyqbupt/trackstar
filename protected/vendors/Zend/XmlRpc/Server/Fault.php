@@ -1,13 +1,30 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_XmlRpc
+ * @subpackage Server
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Fault.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\XmlRpc\Server;
+/**
+ * Zend_XmlRpc_Fault
+ */
+require_once 'Zend/XmlRpc/Fault.php';
+
 
 /**
  * XMLRPC Server Faults
@@ -22,38 +39,45 @@ namespace Zend\XmlRpc\Server;
  * need only implement a static 'observe' method.
  *
  * To allow method chaining, you may use the {@link getInstance()} factory
- * to instantiate a Zend\XmlRpc\Server\Fault.
+ * to instantiate a Zend_XmlRpc_Server_Fault.
+ *
+ * @category   Zend
+ * @package    Zend_XmlRpc
+ * @subpackage Server
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Fault extends \Zend\XmlRpc\Fault
+class Zend_XmlRpc_Server_Fault extends Zend_XmlRpc_Fault
 {
     /**
-     * @var \Exception
+     * @var Exception
      */
-    protected $exception;
+    protected $_exception;
 
     /**
      * @var array Array of exception classes that may define xmlrpc faults
      */
-    protected static $faultExceptionClasses = array('Zend\\XmlRpc\\Server\\Exception\\ExceptionInterface' => true);
+    protected static $_faultExceptionClasses = array('Zend_XmlRpc_Server_Exception' => true);
 
     /**
      * @var array Array of fault observers
      */
-    protected static $observers = array();
+    protected static $_observers = array();
 
     /**
      * Constructor
      *
-     * @param  \Exception $e
-     * @return Fault
+     * @param Exception $e
+     * @return Zend_XmlRpc_Server_Fault
      */
-    public function __construct(\Exception $e)
+    public function __construct(Exception $e)
     {
-        $this->exception = $e;
+        $this->_exception = $e;
         $code             = 404;
         $message          = 'Unknown error';
+        $exceptionClass   = get_class($e);
 
-        foreach (array_keys(static::$faultExceptionClasses) as $class) {
+        foreach (array_keys(self::$_faultExceptionClasses) as $class) {
             if ($e instanceof $class) {
                 $code    = $e->getCode();
                 $message = $e->getMessage();
@@ -64,22 +88,22 @@ class Fault extends \Zend\XmlRpc\Fault
         parent::__construct($code, $message);
 
         // Notify exception observers, if present
-        if (!empty(static::$observers)) {
-            foreach (array_keys(static::$observers) as $observer) {
-                $observer::observe($this);
+        if (!empty(self::$_observers)) {
+            foreach (array_keys(self::$_observers) as $observer) {
+                call_user_func(array($observer, 'observe'), $this);
             }
         }
     }
 
     /**
-     * Return Zend\XmlRpc\Server\Fault instance
+     * Return Zend_XmlRpc_Server_Fault instance
      *
-     * @param \Exception $e
-     * @return Fault
+     * @param Exception $e
+     * @return Zend_XmlRpc_Server_Fault
      */
-    public static function getInstance(\Exception $e)
+    public static function getInstance(Exception $e)
     {
-        return new static($e);
+        return new self($e);
     }
 
     /**
@@ -96,7 +120,7 @@ class Fault extends \Zend\XmlRpc\Fault
 
         foreach ($classes as $class) {
             if (is_string($class) && class_exists($class)) {
-                static::$faultExceptionClasses[$class] = true;
+                self::$_faultExceptionClasses[$class] = true;
             }
         }
     }
@@ -114,8 +138,8 @@ class Fault extends \Zend\XmlRpc\Fault
         }
 
         foreach ($classes as $class) {
-            if (is_string($class) && isset(static::$faultExceptionClasses[$class])) {
-                unset(static::$faultExceptionClasses[$class]);
+            if (is_string($class) && isset(self::$_faultExceptionClasses[$class])) {
+                unset(self::$_faultExceptionClasses[$class]);
             }
         }
     }
@@ -130,7 +154,7 @@ class Fault extends \Zend\XmlRpc\Fault
      * 'observe' that accepts an exception as its sole argument.
      *
      * @param string $class
-     * @return bool
+     * @return boolean
      */
     public static function attachObserver($class)
     {
@@ -141,8 +165,8 @@ class Fault extends \Zend\XmlRpc\Fault
             return false;
         }
 
-        if (!isset(static::$observers[$class])) {
-            static::$observers[$class] = true;
+        if (!isset(self::$_observers[$class])) {
+            self::$_observers[$class] = true;
         }
 
         return true;
@@ -152,15 +176,15 @@ class Fault extends \Zend\XmlRpc\Fault
      * Detach an observer
      *
      * @param string $class
-     * @return bool
+     * @return boolean
      */
     public static function detachObserver($class)
     {
-        if (!isset(static::$observers[$class])) {
+        if (!isset(self::$_observers[$class])) {
             return false;
         }
 
-        unset(static::$observers[$class]);
+        unset(self::$_observers[$class]);
         return true;
     }
 
@@ -168,10 +192,10 @@ class Fault extends \Zend\XmlRpc\Fault
      * Retrieve the exception
      *
      * @access public
-     * @return \Exception
+     * @return Exception
      */
     public function getException()
     {
-        return $this->exception;
+        return $this->_exception;
     }
 }

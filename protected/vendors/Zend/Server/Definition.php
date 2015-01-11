@@ -1,36 +1,50 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Server
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Definition.php 23775 2011-03-01 17:25:24Z ralph $
  */
-
-namespace Zend\Server;
-
-use Countable;
-use Iterator;
 
 /**
  * Server methods metadata
+ *
+ * @todo       Implement iterator
+ * @category   Zend
+ * @package    Zend_Server
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Definition implements Countable, Iterator
+class Zend_Server_Definition implements Countable, Iterator
 {
     /**
-     * @var array Array of \Zend\Server\Method\Definition objects
+     * @var array Array of Zend_Server_Method_Definition objects
      */
-    protected $methods = array();
+    protected $_methods = array();
 
     /**
      * @var bool Whether or not overwriting existing methods is allowed
      */
-    protected $overwriteExistingMethods = false;
+    protected $_overwriteExistingMethods = false;
 
     /**
      * Constructor
      *
      * @param  null|array $methods
+     * @return void
      */
     public function __construct($methods = null)
     {
@@ -43,28 +57,30 @@ class Definition implements Countable, Iterator
      * Set flag indicating whether or not overwriting existing methods is allowed
      *
      * @param mixed $flag
-     * @return \Zend\Server\Definition
+     * @return void
      */
     public function setOverwriteExistingMethods($flag)
     {
-        $this->overwriteExistingMethods = (bool) $flag;
+        $this->_overwriteExistingMethods = (bool) $flag;
         return $this;
     }
 
     /**
      * Add method to definition
      *
-     * @param  array|\Zend\Server\Method\Definition $method
+     * @param  array|Zend_Server_Method_Definition $method
      * @param  null|string $name
-     * @return \Zend\Server\Definition
-     * @throws \Zend\Server\Exception\InvalidArgumentException if duplicate or invalid method provided
+     * @return Zend_Server_Definition
+     * @throws Zend_Server_Exception if duplicate or invalid method provided
      */
     public function addMethod($method, $name = null)
     {
         if (is_array($method)) {
-            $method = new Method\Definition($method);
-        } elseif (!$method instanceof Method\Definition) {
-            throw new Exception\InvalidArgumentException('Invalid method provided');
+            require_once 'Zend/Server/Method/Definition.php';
+            $method = new Zend_Server_Method_Definition($method);
+        } elseif (!$method instanceof Zend_Server_Method_Definition) {
+            require_once 'Zend/Server/Exception.php';
+            throw new Zend_Server_Exception('Invalid method provided');
         }
 
         if (is_numeric($name)) {
@@ -76,21 +92,23 @@ class Definition implements Countable, Iterator
             $name = $method->getName();
         }
         if (null === $name) {
-            throw new Exception\InvalidArgumentException('No method name provided');
+            require_once 'Zend/Server/Exception.php';
+            throw new Zend_Server_Exception('No method name provided');
         }
 
-        if (!$this->overwriteExistingMethods && array_key_exists($name, $this->methods)) {
-            throw new Exception\InvalidArgumentException(sprintf('Method by name of "%s" already exists', $name));
+        if (!$this->_overwriteExistingMethods && array_key_exists($name, $this->_methods)) {
+            require_once 'Zend/Server/Exception.php';
+            throw new Zend_Server_Exception(sprintf('Method by name of "%s" already exists', $name));
         }
-        $this->methods[$name] = $method;
+        $this->_methods[$name] = $method;
         return $this;
     }
 
     /**
      * Add multiple methods
      *
-     * @param  array $methods Array of \Zend\Server\Method\Definition objects or arrays
-     * @return \Zend\Server\Definition
+     * @param  array $methods Array of Zend_Server_Method_Definition objects or arrays
+     * @return Zend_Server_Definition
      */
     public function addMethods(array $methods)
     {
@@ -103,8 +121,8 @@ class Definition implements Countable, Iterator
     /**
      * Set all methods at once (overwrite)
      *
-     * @param  array $methods Array of \Zend\Server\Method\Definition objects or arrays
-     * @return \Zend\Server\Definition
+     * @param  array $methods Array of Zend_Server_Method_Definition objects or arrays
+     * @return Zend_Server_Definition
      */
     public function setMethods(array $methods)
     {
@@ -121,19 +139,19 @@ class Definition implements Countable, Iterator
      */
     public function hasMethod($method)
     {
-        return array_key_exists($method, $this->methods);
+        return array_key_exists($method, $this->_methods);
     }
 
     /**
      * Get a given method definition
      *
      * @param  string $method
-     * @return null|\Zend\Server\Method\Definition
+     * @return null|Zend_Server_Method_Definition
      */
     public function getMethod($method)
     {
         if ($this->hasMethod($method)) {
-            return $this->methods[$method];
+            return $this->_methods[$method];
         }
         return false;
     }
@@ -141,23 +159,23 @@ class Definition implements Countable, Iterator
     /**
      * Get all method definitions
      *
-     * @return array Array of \Zend\Server\Method\Definition objects
+     * @return array Array of Zend_Server_Method_Definition objects
      */
     public function getMethods()
     {
-        return $this->methods;
+        return $this->_methods;
     }
 
     /**
      * Remove a method definition
      *
      * @param  string $method
-     * @return \Zend\Server\Definition
+     * @return Zend_Server_Definition
      */
     public function removeMethod($method)
     {
         if ($this->hasMethod($method)) {
-            unset($this->methods[$method]);
+            unset($this->_methods[$method]);
         }
         return $this;
     }
@@ -165,11 +183,11 @@ class Definition implements Countable, Iterator
     /**
      * Clear all method definitions
      *
-     * @return \Zend\Server\Definition
+     * @return Zend_Server_Definition
      */
     public function clearMethods()
     {
-        $this->methods = array();
+        $this->_methods = array();
         return $this;
     }
 
@@ -194,17 +212,17 @@ class Definition implements Countable, Iterator
      */
     public function count()
     {
-        return count($this->methods);
+        return count($this->_methods);
     }
 
     /**
      * Iterator: current item
      *
-     * @return Method\Definition
+     * @return mixed
      */
     public function current()
     {
-        return current($this->methods);
+        return current($this->_methods);
     }
 
     /**
@@ -214,17 +232,17 @@ class Definition implements Countable, Iterator
      */
     public function key()
     {
-        return key($this->methods);
+        return key($this->_methods);
     }
 
     /**
      * Iterator: advance to next method
      *
-     * @return Method\Definition
+     * @return void
      */
     public function next()
     {
-        return next($this->methods);
+        return next($this->_methods);
     }
 
     /**
@@ -234,7 +252,7 @@ class Definition implements Countable, Iterator
      */
     public function rewind()
     {
-        reset($this->methods);
+        return reset($this->_methods);
     }
 
     /**

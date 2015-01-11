@@ -1,51 +1,68 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Tag
+ * @subpackage ItemList
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: ItemList.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Tag;
+/**
+ * @see Zend_Tag_Taggable
+ */
+require_once 'Zend/Tag/Taggable.php';
 
-use ArrayAccess;
-use Countable;
-use SeekableIterator;
-use Zend\Tag\Exception\InvalidArgumentException;
-use Zend\Tag\Exception\OutOfBoundsException;
-
-class ItemList implements Countable, SeekableIterator, ArrayAccess
+/**
+ * @category   Zend
+ * @package    Zend_Tag
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Tag_ItemList implements Countable, SeekableIterator, ArrayAccess
 {
     /**
      * Items in this list
      *
      * @var array
      */
-    protected $items = array();
+    protected $_items = array();
 
     /**
      * Count all items
      *
-     * @return int
+     * @return integer
      */
     public function count()
     {
-        return count($this->items);
+        return count($this->_items);
     }
 
     /**
      * Spread values in the items relative to their weight
      *
      * @param  array $values
-     * @throws InvalidArgumentException When value list is empty
+     * @throws Zend_Tag_Exception When value list is empty
      * @return void
      */
     public function spreadWeightValues(array $values)
     {
         // Don't allow an empty value list
         if (count($values) === 0) {
-            throw new InvalidArgumentException('Value list may not be empty');
+            require_once 'Zend/Tag/Exception.php';
+            throw new Zend_Tag_Exception('Value list may not be empty');
         }
 
         // Re-index the array
@@ -53,7 +70,7 @@ class ItemList implements Countable, SeekableIterator, ArrayAccess
 
         // If just a single value is supplied simply assign it to to all tags
         if (count($values) === 1) {
-            foreach ($this->items as $item) {
+            foreach ($this->_items as $item) {
                 $item->setParam('weightValue', $values[0]);
             }
         } else {
@@ -61,7 +78,7 @@ class ItemList implements Countable, SeekableIterator, ArrayAccess
             $minWeight = null;
             $maxWeight = null;
 
-            foreach ($this->items as $item) {
+            foreach ($this->_items as $item) {
                 if ($minWeight === null && $maxWeight === null) {
                     $minWeight = $item->getWeight();
                     $maxWeight = $item->getWeight();
@@ -81,7 +98,7 @@ class ItemList implements Countable, SeekableIterator, ArrayAccess
             }
 
             // Then assign the weight values
-            foreach ($this->items as $item) {
+            foreach ($this->_items as $item) {
                 $threshold = floor(100 * log($item->getWeight() + 2));
 
                 for ($i = 0; $i < $steps; $i++) {
@@ -95,9 +112,9 @@ class ItemList implements Countable, SeekableIterator, ArrayAccess
     }
 
     /**
-     * Seek to an absolute position
+     * Seek to an absolute positio
      *
-     * @param  int $index
+     * @param  integer $index
      * @throws OutOfBoundsException When the seek position is invalid
      * @return void
      */
@@ -123,7 +140,7 @@ class ItemList implements Countable, SeekableIterator, ArrayAccess
      */
     public function current()
     {
-        return current($this->items);
+        return current($this->_items);
     }
 
     /**
@@ -133,7 +150,7 @@ class ItemList implements Countable, SeekableIterator, ArrayAccess
      */
     public function next()
     {
-        return next($this->items);
+        return next($this->_items);
     }
 
     /**
@@ -143,13 +160,13 @@ class ItemList implements Countable, SeekableIterator, ArrayAccess
      */
     public function key()
     {
-        return key($this->items);
+        return key($this->_items);
     }
 
     /**
      * Check if there is a current element after calls to rewind() or next()
      *
-     * @return bool
+     * @return boolean
      */
     public function valid()
     {
@@ -163,51 +180,49 @@ class ItemList implements Countable, SeekableIterator, ArrayAccess
      */
     public function rewind()
     {
-        reset($this->items);
+        reset($this->_items);
     }
 
     /**
      * Check if an offset exists
      *
      * @param  mixed $offset
-     * @return bool
+     * @return boolean
      */
-    public function offsetExists($offset)
-    {
-        return array_key_exists($offset, $this->items);
+    public function offsetExists($offset) {
+        return array_key_exists($offset, $this->_items);
     }
 
     /**
      * Get the value of an offset
      *
      * @param  mixed $offset
-     * @return TaggableInterface
+     * @return Zend_Tag_Taggable
      */
-    public function offsetGet($offset)
-    {
-        return $this->items[$offset];
+    public function offsetGet($offset) {
+        return $this->_items[$offset];
     }
 
     /**
      * Append a new item
      *
      * @param  mixed          $offset
-     * @param  TaggableInterface $item
-     * @throws OutOfBoundsException When item does not implement Zend\Tag\TaggableInterface
+     * @param  Zend_Tag_Taggable $item
+     * @throws OutOfBoundsException When item does not implement Zend_Tag_Taggable
      * @return void
      */
-    public function offsetSet($offset, $item)
-    {
+    public function offsetSet($offset, $item) {
         // We need to make that check here, as the method signature must be
         // compatible with ArrayAccess::offsetSet()
-        if (!($item instanceof TaggableInterface)) {
-            throw new OutOfBoundsException('Item must implement Zend\Tag\TaggableInterface');
+        if (!($item instanceof Zend_Tag_Taggable)) {
+            require_once 'Zend/Tag/Exception.php';
+            throw new Zend_Tag_Exception('Item must implement Zend_Tag_Taggable');
         }
 
         if ($offset === null) {
-            $this->items[] = $item;
+            $this->_items[] = $item;
         } else {
-            $this->items[$offset] = $item;
+            $this->_items[$offset] = $item;
         }
     }
 
@@ -217,8 +232,7 @@ class ItemList implements Countable, SeekableIterator, ArrayAccess
      * @param  mixed $offset
      * @return void
      */
-    public function offsetUnset($offset)
-    {
-        unset($this->items[$offset]);
+    public function offsetUnset($offset) {
+        unset($this->_items[$offset]);
     }
 }

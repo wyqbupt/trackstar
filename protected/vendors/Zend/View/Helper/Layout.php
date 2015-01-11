@@ -1,98 +1,81 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: Layout.php 23775 2011-03-01 17:25:24Z ralph $
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-namespace Zend\View\Helper;
-
-use Zend\View\Exception;
-use Zend\View\Model\ModelInterface as Model;
+/** Zend_View_Helper_Abstract.php */
+require_once 'Zend/View/Helper/Abstract.php';
 
 /**
  * View helper for retrieving layout object
+ *
+ * @package    Zend_View
+ * @subpackage Helper
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Layout extends AbstractHelper
+class Zend_View_Helper_Layout extends Zend_View_Helper_Abstract
 {
-    /**
-     * @var ViewModel
-     */
-    protected $viewModelHelper;
+    /** @var Zend_Layout */
+    protected $_layout;
 
     /**
-     * Set layout template or retrieve "layout" view model
+     * Get layout object
      *
-     * If no arguments are given, grabs the "root" or "layout" view model.
-     * Otherwise, attempts to set the template for that view model.
-     *
-     * @param  null|string $template
-     * @return Layout
-     */
-    public function __invoke($template = null)
-    {
-        if (null === $template) {
-            return $this->getRoot();
-        }
-
-        return $this->setTemplate($template);
-    }
-
-    /**
-     * Get layout template
-     *
-     * @return string
+     * @return Zend_Layout
      */
     public function getLayout()
     {
-        return $this->getRoot()->getTemplate();
-    }
-
-    /**
-     * Get the root view model
-     *
-     * @throws Exception\RuntimeException
-     * @return null|Model
-     */
-    protected function getRoot()
-    {
-        $helper = $this->getViewModelHelper();
-
-        if (!$helper->hasRoot()) {
-            throw new Exception\RuntimeException(sprintf(
-                '%s: no view model currently registered as root in renderer',
-                __METHOD__
-            ));
+        if (null === $this->_layout) {
+            require_once 'Zend/Layout.php';
+            $this->_layout = Zend_Layout::getMvcInstance();
+            if (null === $this->_layout) {
+                // Implicitly creates layout object
+                $this->_layout = new Zend_Layout();
+            }
         }
 
-        return $helper->getRoot();
+        return $this->_layout;
     }
 
     /**
-     * Set layout template
+     * Set layout object
      *
-     * @param  string $template
-     * @return Layout
+     * @param  Zend_Layout $layout
+     * @return Zend_Layout_Controller_Action_Helper_Layout
      */
-    public function setTemplate($template)
+    public function setLayout(Zend_Layout $layout)
     {
-        $this->getRoot()->setTemplate((string) $template);
+        $this->_layout = $layout;
         return $this;
     }
 
     /**
-     * Retrieve the view model helper
+     * Return layout object
      *
-     * @return ViewModel
+     * Usage: $this->layout()->setLayout('alternate');
+     *
+     * @return Zend_Layout
      */
-    protected function getViewModelHelper()
+    public function layout()
     {
-        if (null === $this->viewModelHelper) {
-            $this->viewModelHelper = $this->getView()->plugin('view_model');
-        }
-
-        return $this->viewModelHelper;
+        return $this->getLayout();
     }
 }

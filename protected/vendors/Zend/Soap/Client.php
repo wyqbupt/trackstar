@@ -1,129 +1,159 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Soap
+ * @subpackage Client
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Client.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Soap;
+/**
+ * @see Zend_Soap_Server
+ */
+require_once 'Zend/Soap/Server.php';
 
-use SoapClient;
-use SoapHeader;
-use Traversable;
-use Zend\Server\Client as ServerClient;
-use Zend\Stdlib\ArrayUtils;
+/**
+ * @see Zend_Soap_Client_Local
+ */
+require_once 'Zend/Soap/Client/Local.php';
 
-class Client implements ServerClient
+/**
+ * @see Zend_Soap_Client_Common
+ */
+require_once 'Zend/Soap/Client/Common.php';
+
+/**
+ * Zend_Soap_Client
+ *
+ * @category   Zend
+ * @package    Zend_Soap
+ * @subpackage Client
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Soap_Client
 {
-    /**
-     * Array of SOAP type => PHP class pairings for handling return/incoming values
-     * @var array
-     */
-    protected $classmap = null;
-
     /**
      * Encoding
      * @var string
      */
-    protected $encoding = 'UTF-8';
+    protected $_encoding = 'UTF-8';
+
+    /**
+     * Array of SOAP type => PHP class pairings for handling return/incoming values
+     * @var array
+     */
+    protected $_classmap = null;
 
     /**
      * Registered fault exceptions
      * @var array
      */
-    protected $faultExceptions = array();
-
-    /**
-     * Last invoked method
-     * @var string
-     */
-    protected $lastMethod = '';
-
-    /**
-     * Permanent SOAP request headers (shared between requests).
-     * @var array
-     */
-    protected $permanentSoapInputHeaders = array();
-
-    /**
-     * SoapClient object
-     * @var SoapClient
-     */
-    protected $soapClient;
-
-    /**
-     * Array of SoapHeader objects
-     * @var SoapHeader[]
-     */
-    protected $soapInputHeaders = array();
-
-    /**
-     * Array of SoapHeader objects
-     * @var array
-     */
-    protected $soapOutputHeaders = array();
+    protected $_faultExceptions = array();
 
     /**
      * SOAP version to use; SOAP_1_2 by default, to allow processing of headers
      * @var int
      */
-    protected $soapVersion = SOAP_1_2;
+    protected $_soapVersion = SOAP_1_2;
 
-    /**
-     * @var array
-     */
-    protected $typemap              = null;
+    /** Set of other SoapClient options */
+    protected $_uri                 = null;
+    protected $_location            = null;
+    protected $_style               = null;
+    protected $_use                 = null;
+    protected $_login               = null;
+    protected $_password            = null;
+    protected $_proxy_host          = null;
+    protected $_proxy_port          = null;
+    protected $_proxy_login         = null;
+    protected $_proxy_password      = null;
+    protected $_local_cert          = null;
+    protected $_passphrase          = null;
+    protected $_compression         = null;
+    protected $_connection_timeout  = null;
+    protected $_stream_context      = null;
+    protected $_features            = null;
+    protected $_cache_wsdl          = null;
+    protected $_user_agent          = null;
 
     /**
      * WSDL used to access server
-     * It also defines Client working mode (WSDL vs non-WSDL)
+     * It also defines Zend_Soap_Client working mode (WSDL vs non-WSDL)
+     *
      * @var string
      */
-    protected $wsdl = null;
-
-    /**#@+
-     * @var string
-     */
-    protected $connectionTimeout    = null;
-    protected $localCert            = null;
-    protected $location             = null;
-    protected $login                = null;
-    protected $passphrase           = null;
-    protected $password             = null;
-    protected $proxyHost            = null;
-    protected $proxyLogin           = null;
-    protected $proxyPassword        = null;
-    protected $proxyPort            = null;
-    protected $streamContext        = null;
-    protected $style                = null;
-    protected $uri                  = null;
-    protected $use                  = null;
-    protected $userAgent            = null;
-    /**#@-*/
-
-    /**#@+
-     * @var int
-     */
-    protected $cacheWsdl            = null;
-    protected $compression          = null;
-    protected $features             = null;
-    /**#@-*/
+    protected $_wsdl = null;
 
     /**
-     * @param  string $wsdl
-     * @param  array|Traversable $options
-     * @throws Exception\ExtensionNotLoadedException
+     * SoapClient object
+     *
+     * @var SoapClient
+     */
+    protected $_soapClient;
+
+    /**
+     * Last invoked method
+     *
+     * @var string
+     */
+    protected $_lastMethod = '';
+
+    /**
+     * SOAP request headers.
+     *
+     * Array of SoapHeader objects
+     *
+     * @var array
+     */
+    protected $_soapInputHeaders = array();
+
+    /**
+     * Permanent SOAP request headers (shared between requests).
+     *
+     * Array of SoapHeader objects
+     *
+     * @var array
+     */
+    protected $_permanentSoapInputHeaders = array();
+
+    /**
+     * Output SOAP headers.
+     *
+     * Array of SoapHeader objects
+     *
+     * @var array
+     */
+    protected $_soapOutputHeaders = array();
+
+    /**
+     * Constructor
+     *
+     * @param string $wsdl
+     * @param array $options
      */
     public function __construct($wsdl = null, $options = null)
     {
         if (!extension_loaded('soap')) {
-            throw new Exception\ExtensionNotLoadedException('SOAP extension is not loaded.');
+            require_once 'Zend/Soap/Client/Exception.php';
+            throw new Zend_Soap_Client_Exception('SOAP extension is not loaded.');
         }
 
         if ($wsdl !== null) {
-            $this->setWSDL($wsdl);
+            $this->setWsdl($wsdl);
         }
         if ($options !== null) {
             $this->setOptions($options);
@@ -133,13 +163,13 @@ class Client implements ServerClient
     /**
      * Set wsdl
      *
-     * @param  string $wsdl
-     * @return self
+     * @param string $wsdl
+     * @return Zend_Soap_Client
      */
-    public function setWSDL($wsdl)
+    public function setWsdl($wsdl)
     {
-        $this->wsdl = $wsdl;
-        $this->soapClient = null;
+        $this->_wsdl = $wsdl;
+        $this->_soapClient = null;
 
         return $this;
     }
@@ -149,9 +179,9 @@ class Client implements ServerClient
      *
      * @return string
      */
-    public function getWSDL()
+    public function getWsdl()
     {
-        return $this->wsdl;
+        return $this->_wsdl;
     }
 
     /**
@@ -159,124 +189,94 @@ class Client implements ServerClient
      *
      * Allows setting options as an associative array of option => value pairs.
      *
-     * @param  array|Traversable $options
-     * @return self
-     * @throws Exception\InvalidArgumentException
+     * @param  array|Zend_Config $options
+     * @return Zend_Soap_Client
+     * @throws Zend_SoapClient_Exception
      */
     public function setOptions($options)
     {
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
+        if($options instanceof Zend_Config) {
+            $options = $options->toArray();
         }
 
         foreach ($options as $key => $value) {
-            switch (strtolower($key)) {
+            switch ($key) {
                 case 'classmap':
-                case 'class_map':
+                case 'classMap':
                     $this->setClassmap($value);
                     break;
-
                 case 'encoding':
                     $this->setEncoding($value);
                     break;
-
-                case 'soapversion':
+                case 'soapVersion':
                 case 'soap_version':
                     $this->setSoapVersion($value);
                     break;
-
                 case 'wsdl':
-                    $this->setWSDL($value);
+                    $this->setWsdl($value);
                     break;
-
                 case 'uri':
                     $this->setUri($value);
                     break;
-
                 case 'location':
                     $this->setLocation($value);
                     break;
-
                 case 'style':
                     $this->setStyle($value);
                     break;
-
                 case 'use':
                     $this->setEncodingMethod($value);
                     break;
-
                 case 'login':
                     $this->setHttpLogin($value);
                     break;
-
                 case 'password':
                     $this->setHttpPassword($value);
                     break;
-
-                case 'proxyhost':
                 case 'proxy_host':
                     $this->setProxyHost($value);
                     break;
-
-                case 'proxyport':
                 case 'proxy_port':
                     $this->setProxyPort($value);
                     break;
-
-                case 'proxylogin':
                 case 'proxy_login':
                     $this->setProxyLogin($value);
                     break;
-
-                case 'proxypassword':
                 case 'proxy_password':
                     $this->setProxyPassword($value);
                     break;
-
-                case 'localcert':
                 case 'local_cert':
                     $this->setHttpsCertificate($value);
                     break;
-
                 case 'passphrase':
                     $this->setHttpsCertPassphrase($value);
                     break;
-
                 case 'compression':
                     $this->setCompressionOptions($value);
                     break;
-
-                case 'streamcontext':
                 case 'stream_context':
                     $this->setStreamContext($value);
                     break;
-
                 case 'features':
                     $this->setSoapFeatures($value);
                     break;
-
-                case 'cachewsdl':
                 case 'cache_wsdl':
-                    $this->setWSDLCache($value);
+                    $this->setWsdlCache($value);
                     break;
-
                 case 'useragent':
+                case 'userAgent':
                 case 'user_agent':
                     $this->setUserAgent($value);
                     break;
 
-                case 'typemap':
-                case 'type_map':
-                    $this->setTypemap($value);
-                    break;
-
                 // Not used now
                 // case 'connection_timeout':
-                //     $this->connectionTimeout = $value;
+                //     $this->_connection_timeout = $value;
                 //    break;
 
                 default:
-                    throw new Exception\InvalidArgumentException('Unknown SOAP client option');
+                    require_once 'Zend/Soap/Client/Exception.php';
+                    throw new Zend_Soap_Client_Exception('Unknown SOAP client option');
                     break;
             }
         }
@@ -294,10 +294,9 @@ class Client implements ServerClient
         $options = array();
 
         $options['classmap']       = $this->getClassmap();
-        $options['typemap']        = $this->getTypemap();
         $options['encoding']       = $this->getEncoding();
         $options['soap_version']   = $this->getSoapVersion();
-        $options['wsdl']           = $this->getWSDL();
+        $options['wsdl']           = $this->getWsdl();
         $options['uri']            = $this->getUri();
         $options['location']       = $this->getLocation();
         $options['style']          = $this->getStyle();
@@ -311,9 +310,9 @@ class Client implements ServerClient
         $options['local_cert']     = $this->getHttpsCertificate();
         $options['passphrase']     = $this->getHttpsCertPassphrase();
         $options['compression']    = $this->getCompressionOptions();
-        //$options['connection_timeout'] = $this->connectionTimeout;
+        //$options['connection_timeout'] = $this->_connection_timeout;
         $options['stream_context'] = $this->getStreamContext();
-        $options['cache_wsdl']     = $this->getWSDLCache();
+        $options['cache_wsdl']     = $this->getWsdlCache();
         $options['features']       = $this->getSoapFeatures();
         $options['user_agent']     = $this->getUserAgent();
 
@@ -340,19 +339,19 @@ class Client implements ServerClient
      * Set SOAP version
      *
      * @param  int $version One of the SOAP_1_1 or SOAP_1_2 constants
-     * @return self
-     * @throws Exception\InvalidArgumentException with invalid soap version argument
+     * @return Zend_Soap_Client
+     * @throws Zend_Soap_Client_Exception with invalid soap version argument
      */
     public function setSoapVersion($version)
     {
         if (!in_array($version, array(SOAP_1_1, SOAP_1_2))) {
-            throw new Exception\InvalidArgumentException(
-                'Invalid soap version specified. Use SOAP_1_1 or SOAP_1_2 constants.'
-            );
+            require_once 'Zend/Soap/Client/Exception.php';
+            throw new Zend_Soap_Client_Exception('Invalid soap version specified. Use SOAP_1_1 or SOAP_1_2 constants.');
         }
+        $this->_soapVersion = $version;
 
-        $this->soapVersion = $version;
-        $this->soapClient  = null;
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -363,26 +362,29 @@ class Client implements ServerClient
      */
     public function getSoapVersion()
     {
-        return $this->soapVersion;
+        return $this->_soapVersion;
     }
 
     /**
      * Set classmap
      *
      * @param  array $classmap
-     * @return self
-     * @throws Exception\InvalidArgumentException for any invalid class in the class map
+     * @return Zend_Soap_Client
+     * @throws Zend_Soap_Client_Exception for any invalid class in the class map
      */
     public function setClassmap(array $classmap)
     {
-        foreach ($classmap as $class) {
+        foreach ($classmap as $type => $class) {
             if (!class_exists($class)) {
-                throw new Exception\InvalidArgumentException('Invalid class in class map: ' . $class);
+                require_once 'Zend/Soap/Client/Exception.php';
+                throw new Zend_Soap_Client_Exception('Invalid class in class map');
             }
         }
 
-        $this->classmap   = $classmap;
-        $this->soapClient = null;
+        $this->_classmap = $classmap;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -393,57 +395,27 @@ class Client implements ServerClient
      */
     public function getClassmap()
     {
-        return $this->classmap;
-    }
-
-    /**
-     * Set typemap with xml to php type mappings with appropriate validation.
-     *
-     * @param array $typeMap
-     * @return self
-     * @throws Exception\InvalidArgumentException
-     */
-    public function setTypemap(array $typeMap)
-    {
-        foreach ($typeMap as $type) {
-            if (!is_callable($type['from_xml'])) {
-                throw new Exception\InvalidArgumentException('Invalid from_xml callback for type: ' . $type['type_name']);
-            }
-            if (!is_callable($type['to_xml'])) {
-                throw new Exception\InvalidArgumentException('Invalid to_xml callback for type: ' . $type['type_name']);
-            }
-        }
-
-        $this->typemap   = $typeMap;
-        $this->soapClient = null;
-        return $this;
-    }
-
-    /**
-     * Retrieve typemap
-     *
-     * @return array
-     */
-    public function getTypemap()
-    {
-        return $this->typemap;
+        return $this->_classmap;
     }
 
     /**
      * Set encoding
      *
      * @param  string $encoding
-     * @return self
-     * @throws Exception\InvalidArgumentException with invalid encoding argument
+     * @return Zend_Soap_Client
+     * @throws Zend_Soap_Client_Exception with invalid encoding argument
      */
     public function setEncoding($encoding)
     {
         if (!is_string($encoding)) {
-            throw new Exception\InvalidArgumentException('Invalid encoding specified');
+            require_once 'Zend/Soap/Client/Exception.php';
+            throw new Zend_Soap_Client_Exception('Invalid encoding specified');
         }
 
-        $this->encoding   = $encoding;
-        $this->soapClient = null;
+        $this->_encoding = $encoding;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -454,23 +426,26 @@ class Client implements ServerClient
      */
     public function getEncoding()
     {
-        return $this->encoding;
+        return $this->_encoding;
     }
 
     /**
      * Check for valid URN
      *
      * @param  string $urn
-     * @return bool
-     * @throws Exception\InvalidArgumentException on invalid URN
+     * @return true
+     * @throws Zend_Soap_Client_Exception on invalid URN
      */
     public function validateUrn($urn)
     {
         $scheme = parse_url($urn, PHP_URL_SCHEME);
         if ($scheme === false || $scheme === null) {
-            throw new Exception\InvalidArgumentException('Invalid URN');
+            require_once 'Zend/Soap/Client/Exception.php';
+            throw new Zend_Soap_Client_Exception('Invalid URN');
         }
+
         return true;
+
     }
 
     /**
@@ -479,14 +454,16 @@ class Client implements ServerClient
      * URI in Web Service the target namespace
      *
      * @param  string $uri
-     * @return self
-     * @throws Exception\InvalidArgumentException with invalid uri argument
+     * @return Zend_Soap_Client
+     * @throws Zend_Soap_Client_Exception with invalid uri argument
      */
     public function setUri($uri)
     {
         $this->validateUrn($uri);
-        $this->uri        = $uri;
-        $this->soapClient = null;
+        $this->_uri = $uri;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -497,7 +474,7 @@ class Client implements ServerClient
      */
     public function getUri()
     {
-        return $this->uri;
+        return $this->_uri;
     }
 
     /**
@@ -506,14 +483,16 @@ class Client implements ServerClient
      * URI in Web Service the target namespace
      *
      * @param  string $location
-     * @return self
-     * @throws Exception\InvalidArgumentException with invalid uri argument
+     * @return Zend_Soap_Client
+     * @throws Zend_Soap_Client_Exception with invalid uri argument
      */
     public function setLocation($location)
     {
         $this->validateUrn($location);
-        $this->location   = $location;
-        $this->soapClient = null;
+        $this->_location = $location;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -524,26 +503,27 @@ class Client implements ServerClient
      */
     public function getLocation()
     {
-        return $this->location;
+        return $this->_location;
     }
 
     /**
      * Set request style
      *
      * @param  int $style One of the SOAP_RPC or SOAP_DOCUMENT constants
-     * @return self
-     * @throws Exception\InvalidArgumentException with invalid style argument
+     * @return Zend_Soap_Client
+     * @throws Zend_Soap_Client_Exception with invalid style argument
      */
     public function setStyle($style)
     {
         if (!in_array($style, array(SOAP_RPC, SOAP_DOCUMENT))) {
-            throw new Exception\InvalidArgumentException(
-                'Invalid request style specified. Use SOAP_RPC or SOAP_DOCUMENT constants.'
-            );
+            require_once 'Zend/Soap/Client/Exception.php';
+            throw new Zend_Soap_Client_Exception('Invalid request style specified. Use SOAP_RPC or SOAP_DOCUMENT constants.');
         }
 
-        $this->style      = $style;
-        $this->soapClient = null;
+        $this->_style = $style;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -554,26 +534,27 @@ class Client implements ServerClient
      */
     public function getStyle()
     {
-        return $this->style;
+        return $this->_style;
     }
 
     /**
      * Set message encoding method
      *
      * @param  int $use One of the SOAP_ENCODED or SOAP_LITERAL constants
-     * @return self
-     * @throws Exception\InvalidArgumentException with invalid message encoding method argument
+     * @return Zend_Soap_Client
+     * @throws Zend_Soap_Client_Exception with invalid message encoding method argument
      */
     public function setEncodingMethod($use)
     {
         if (!in_array($use, array(SOAP_ENCODED, SOAP_LITERAL))) {
-            throw new Exception\InvalidArgumentException(
-                'Invalid message encoding method. Use SOAP_ENCODED or SOAP_LITERAL constants.'
-            );
+            require_once 'Zend/Soap/Client/Exception.php';
+            throw new Zend_Soap_Client_Exception('Invalid message encoding method. Use SOAP_ENCODED or SOAP_LITERAL constants.');
         }
 
-        $this->use        = $use;
-        $this->soapClient = null;
+        $this->_use = $use;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -584,19 +565,21 @@ class Client implements ServerClient
      */
     public function getEncodingMethod()
     {
-        return $this->use;
+        return $this->_use;
     }
 
     /**
      * Set HTTP login
      *
      * @param  string $login
-     * @return self
+     * @return Zend_Soap_Client
      */
     public function setHttpLogin($login)
     {
-        $this->login      = $login;
-        $this->soapClient = null;
+        $this->_login = $login;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -607,19 +590,21 @@ class Client implements ServerClient
      */
     public function getHttpLogin()
     {
-        return $this->login;
+        return $this->_login;
     }
 
     /**
      * Set HTTP password
      *
      * @param  string $password
-     * @return self
+     * @return Zend_Soap_Client
      */
     public function setHttpPassword($password)
     {
-        $this->password   = $password;
-        $this->soapClient = null;
+        $this->_password = $password;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -630,19 +615,21 @@ class Client implements ServerClient
      */
     public function getHttpPassword()
     {
-        return $this->password;
+        return $this->_password;
     }
 
     /**
      * Set proxy host
      *
      * @param  string $proxyHost
-     * @return self
+     * @return Zend_Soap_Client
      */
     public function setProxyHost($proxyHost)
     {
-        $this->proxyHost  = $proxyHost;
-        $this->soapClient = null;
+        $this->_proxy_host = $proxyHost;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -653,19 +640,21 @@ class Client implements ServerClient
      */
     public function getProxyHost()
     {
-        return $this->proxyHost;
+        return $this->_proxy_host;
     }
 
     /**
      * Set proxy port
      *
      * @param  int $proxyPort
-     * @return self
+     * @return Zend_Soap_Client
      */
     public function setProxyPort($proxyPort)
     {
-        $this->proxyPort  = (int) $proxyPort;
-        $this->soapClient = null;
+        $this->_proxy_port = (int)$proxyPort;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -676,19 +665,21 @@ class Client implements ServerClient
      */
     public function getProxyPort()
     {
-        return $this->proxyPort;
+        return $this->_proxy_port;
     }
 
     /**
      * Set proxy login
      *
      * @param  string $proxyLogin
-     * @return self
+     * @return Zend_Soap_Client
      */
     public function setProxyLogin($proxyLogin)
     {
-        $this->proxyLogin = $proxyLogin;
-        $this->soapClient = null;
+        $this->_proxy_login = $proxyLogin;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -699,19 +690,21 @@ class Client implements ServerClient
      */
     public function getProxyLogin()
     {
-        return $this->proxyLogin;
+        return $this->_proxy_login;
     }
 
     /**
      * Set proxy password
      *
-     * @param  string $proxyPassword
-     * @return self
+     * @param  string $proxyLogin
+     * @return Zend_Soap_Client
      */
     public function setProxyPassword($proxyPassword)
     {
-        $this->proxyPassword = $proxyPassword;
-        $this->soapClient    = null;
+        $this->_proxy_password = $proxyPassword;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -719,17 +712,20 @@ class Client implements ServerClient
      * Set HTTPS client certificate path
      *
      * @param  string $localCert local certificate path
-     * @return self
-     * @throws Exception\InvalidArgumentException with invalid local certificate path argument
+     * @return Zend_Soap_Client
+     * @throws Zend_Soap_Client_Exception with invalid local certificate path argument
      */
     public function setHttpsCertificate($localCert)
     {
         if (!is_readable($localCert)) {
-            throw new Exception\InvalidArgumentException('Invalid HTTPS client certificate path.');
+            require_once 'Zend/Soap/Client/Exception.php';
+            throw new Zend_Soap_Client_Exception('Invalid HTTPS client certificate path.');
         }
 
-        $this->localCert  = $localCert;
-        $this->soapClient = null;
+        $this->_local_cert = $localCert;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -740,19 +736,21 @@ class Client implements ServerClient
      */
     public function getHttpsCertificate()
     {
-        return $this->localCert;
+        return $this->_local_cert;
     }
 
     /**
      * Set HTTPS client certificate passphrase
      *
      * @param  string $passphrase
-     * @return self
+     * @return Zend_Soap_Client
      */
     public function setHttpsCertPassphrase($passphrase)
     {
-        $this->passphrase = $passphrase;
-        $this->soapClient = null;
+        $this->_passphrase = $passphrase;
+
+        $this->_soapClient = null;
+
         return $this;
     }
 
@@ -763,24 +761,23 @@ class Client implements ServerClient
      */
     public function getHttpsCertPassphrase()
     {
-        return $this->passphrase;
+        return $this->_passphrase;
     }
 
     /**
      * Set compression options
      *
      * @param  int|null $compressionOptions
-     * @return self
+     * @return Zend_Soap_Client
      */
     public function setCompressionOptions($compressionOptions)
     {
         if ($compressionOptions === null) {
-            $this->compression = null;
+            $this->_compression = null;
         } else {
-            $this->compression = (int) $compressionOptions;
+            $this->_compression = (int)$compressionOptions;
         }
-        $this->soapClient = null;
-
+        $this->_soapClient = null;
         return $this;
     }
 
@@ -791,7 +788,7 @@ class Client implements ServerClient
      */
     public function getCompressionOptions()
     {
-        return $this->compression;
+        return $this->_compression;
     }
 
     /**
@@ -801,23 +798,27 @@ class Client implements ServerClient
      */
     public function getProxyPassword()
     {
-        return $this->proxyPassword;
+        return $this->_proxy_password;
     }
 
     /**
      * Set Stream Context
      *
-     * @param  resource $context
-     * @return self
-     * @throws Exception\InvalidArgumentException
+     * @return Zend_Soap_Client
      */
     public function setStreamContext($context)
     {
-        if (!is_resource($context) || get_resource_type($context) !== "stream-context") {
-            throw new Exception\InvalidArgumentException('Invalid stream context resource given.');
+        if(!is_resource($context) || get_resource_type($context) !== "stream-context") {
+            /**
+             * @see Zend_Soap_Client_Exception
+             */
+            require_once "Zend/Soap/Client/Exception.php";
+            throw new Zend_Soap_Client_Exception(
+                "Invalid stream context resource given."
+            );
         }
 
-        $this->streamContext = $context;
+        $this->_stream_context = $context;
         return $this;
     }
 
@@ -828,19 +829,20 @@ class Client implements ServerClient
      */
     public function getStreamContext()
     {
-        return $this->streamContext;
+        return $this->_stream_context;
     }
 
     /**
      * Set the SOAP Feature options.
      *
      * @param  string|int $feature
-     * @return self
+     * @return Zend_Soap_Client
      */
     public function setSoapFeatures($feature)
     {
-        $this->features   = $feature;
-        $this->soapClient = null;
+        $this->_features = $feature;
+
+        $this->_soapClient = null;
         return $this;
     }
 
@@ -851,51 +853,48 @@ class Client implements ServerClient
      */
     public function getSoapFeatures()
     {
-        return $this->features;
+        return $this->_features;
     }
 
     /**
-     * Set the SOAP WSDL Caching Options
+     * Set the SOAP Wsdl Caching Options
      *
-     * @param  string|int|bool|null $caching
-     * @return self
+     * @param string|int|boolean|null $caching
+     * @return Zend_Soap_Client
      */
-    public function setWSDLCache($caching)
+    public function setWsdlCache($caching)
     {
-        //@todo check WSDL_CACHE_* constants?
         if ($caching === null) {
-            $this->cacheWsdl = null;
+            $this->_cache_wsdl = null;
         } else {
-            $this->cacheWsdl = (int) $caching;
+            $this->_cache_wsdl = (int)$caching;
         }
-
         return $this;
     }
 
     /**
-     * Get current SOAP WSDL Caching option
+     * Get current SOAP Wsdl Caching option
      *
      * @return int
      */
-    public function getWSDLCache()
+    public function getWsdlCache()
     {
-        return $this->cacheWsdl;
+        return $this->_cache_wsdl;
     }
 
     /**
      * Set the string to use in User-Agent header
      *
      * @param  string|null $userAgent
-     * @return self
+     * @return Zend_Soap_Client
      */
     public function setUserAgent($userAgent)
     {
         if ($userAgent === null) {
-            $this->userAgent = null;
+            $this->_user_agent = null;
         } else {
-            $this->userAgent = (string) $userAgent;
+            $this->_user_agent = (string)$userAgent;
         }
-
         return $this;
     }
 
@@ -906,7 +905,7 @@ class Client implements ServerClient
      */
     public function getUserAgent()
     {
-        return $this->userAgent;
+        return $this->_user_agent;
     }
 
     /**
@@ -916,8 +915,8 @@ class Client implements ServerClient
      */
     public function getLastRequest()
     {
-        if ($this->soapClient !== null) {
-            return $this->soapClient->__getLastRequest();
+        if ($this->_soapClient !== null) {
+            return $this->_soapClient->__getLastRequest();
         }
 
         return '';
@@ -930,9 +929,10 @@ class Client implements ServerClient
      */
     public function getLastResponse()
     {
-        if ($this->soapClient !== null) {
-            return $this->soapClient->__getLastResponse();
+        if ($this->_soapClient !== null) {
+            return $this->_soapClient->__getLastResponse();
         }
+
         return '';
     }
 
@@ -943,9 +943,10 @@ class Client implements ServerClient
      */
     public function getLastRequestHeaders()
     {
-        if ($this->soapClient !== null) {
-            return $this->soapClient->__getLastRequestHeaders();
+        if ($this->_soapClient !== null) {
+            return $this->_soapClient->__getLastRequestHeaders();
         }
+
         return '';
     }
 
@@ -956,9 +957,10 @@ class Client implements ServerClient
      */
     public function getLastResponseHeaders()
     {
-        if ($this->soapClient !== null) {
-            return $this->soapClient->__getLastResponseHeaders();
+        if ($this->_soapClient !== null) {
+            return $this->_soapClient->__getLastResponseHeaders();
         }
+
         return '';
     }
 
@@ -969,7 +971,7 @@ class Client implements ServerClient
      */
     public function getLastMethod()
     {
-        return $this->lastMethod;
+        return $this->_lastMethod;
     }
 
     /**
@@ -977,51 +979,57 @@ class Client implements ServerClient
      *
      * May be overridden in subclasses
      *
-     * @param  Client\Common $client
-     * @param  string $request
-     * @param  string $location
-     * @param  string $action
-     * @param  int    $version
-     * @param  int    $oneWay
+     * @internal
+     * @param Zend_Soap_Client_Common $client
+     * @param string $request
+     * @param string $location
+     * @param string $action
+     * @param int    $version
+     * @param int    $one_way
      * @return mixed
      */
-    public function _doRequest(Client\Common $client, $request, $location,$action, $version, $oneWay = null)
+    public function _doRequest(Zend_Soap_Client_Common $client, $request, $location, $action, $version, $one_way = null)
     {
         // Perform request as is
-        if ($oneWay === null) {
-            return call_user_func(array($client, 'SoapClient::__doRequest'), $request, $location, $action, $version);
+        if ($one_way == null) {
+            return call_user_func(array($client,'SoapClient::__doRequest'), $request, $location, $action, $version);
+        } else {
+            return call_user_func(array($client,'SoapClient::__doRequest'), $request, $location, $action, $version, $one_way);
         }
-        return call_user_func(array($client, 'SoapClient::__doRequest'), $request, $location, $action, $version, $oneWay);
     }
 
     /**
      * Initialize SOAP Client object
      *
-     * @throws Exception\ExceptionInterface
+     * @throws Zend_Soap_Client_Exception
      */
     protected function _initSoapClientObject()
     {
-        $wsdl = $this->getWSDL();
+        $wsdl = $this->getWsdl();
         $options = array_merge($this->getOptions(), array('trace' => true));
 
         if ($wsdl == null) {
             if (!isset($options['location'])) {
-                throw new Exception\UnexpectedValueException('"location" parameter is required in non-WSDL mode.');
+                require_once 'Zend/Soap/Client/Exception.php';
+                throw new Zend_Soap_Client_Exception('\'location\' parameter is required in non-WSDL mode.');
             }
             if (!isset($options['uri'])) {
-                throw new Exception\UnexpectedValueException('"uri" parameter is required in non-WSDL mode.');
+                require_once 'Zend/Soap/Client/Exception.php';
+                throw new Zend_Soap_Client_Exception('\'uri\' parameter is required in non-WSDL mode.');
             }
         } else {
             if (isset($options['use'])) {
-                throw new Exception\UnexpectedValueException('"use" parameter only works in non-WSDL mode.');
+                require_once 'Zend/Soap/Client/Exception.php';
+                throw new Zend_Soap_Client_Exception('\'use\' parameter only works in non-WSDL mode.');
             }
             if (isset($options['style'])) {
-                throw new Exception\UnexpectedValueException('"style" parameter only works in non-WSDL mode.');
+                require_once 'Zend/Soap/Client/Exception.php';
+                throw new Zend_Soap_Client_Exception('\'style\' parameter only works in non-WSDL mode.');
             }
         }
         unset($options['wsdl']);
 
-        $this->soapClient = new Client\Common(array($this, '_doRequest'), $wsdl, $options);
+        $this->_soapClient = new Zend_Soap_Client_Common(array($this, '_doRequest'), $wsdl, $options);
     }
 
 
@@ -1030,8 +1038,7 @@ class Client implements ServerClient
      *
      * My be overridden in descendant classes
      *
-     * @param  array $arguments
-     * @return array
+     * @param array $arguments
      */
     protected function _preProcessArguments($arguments)
     {
@@ -1044,8 +1051,7 @@ class Client implements ServerClient
      *
      * My be overridden in descendant classes
      *
-     * @param  array $result
-     * @return array
+     * @param array $arguments
      */
     protected function _preProcessResult($result)
     {
@@ -1056,29 +1062,31 @@ class Client implements ServerClient
     /**
      * Add SOAP input header
      *
-     * @param  SoapHeader $header
-     * @param  bool $permanent
-     * @return self
+     * @param SoapHeader $header
+     * @param boolean $permanent
+     * @return Zend_Soap_Client
      */
     public function addSoapInputHeader(SoapHeader $header, $permanent = false)
     {
         if ($permanent) {
-            $this->permanentSoapInputHeaders[] = $header;
+            $this->_permanentSoapInputHeaders[] = $header;
         } else {
-            $this->soapInputHeaders[] = $header;
+            $this->_soapInputHeaders[] = $header;
         }
+
         return $this;
     }
 
     /**
      * Reset SOAP input headers
      *
-     * @return self
+     * @return Zend_Soap_Client
      */
     public function resetSoapInputHeaders()
     {
-        $this->permanentSoapInputHeaders = array();
-        $this->soapInputHeaders          = array();
+        $this->_permanentSoapInputHeaders = array();
+        $this->_soapInputHeaders = array();
+
         return $this;
     }
 
@@ -1089,121 +1097,103 @@ class Client implements ServerClient
      */
     public function getLastSoapOutputHeaderObjects()
     {
-        return $this->soapOutputHeaders;
+        return $this->_soapOutputHeaders;
     }
 
     /**
      * Perform a SOAP call
      *
-     * @param  string $name
-     * @param  array  $arguments
+     * @param string $name
+     * @param array  $arguments
      * @return mixed
      */
     public function __call($name, $arguments)
     {
-        if (!is_array($arguments)) {
-            $arguments = array($arguments);
-        }
         $soapClient = $this->getSoapClient();
 
-        $this->lastMethod = $name;
+        $this->_lastMethod = $name;
 
-        $soapHeaders = array_merge($this->permanentSoapInputHeaders, $this->soapInputHeaders);
-        $result = $soapClient->__soapCall(
-            $name,
-            $this->_preProcessArguments($arguments),
-            null, /* Options are already set to the SOAP client object */
-            (count($soapHeaders) > 0)? $soapHeaders : null,
-            $this->soapOutputHeaders
-        );
+        $soapHeaders = array_merge($this->_permanentSoapInputHeaders, $this->_soapInputHeaders);
+        $result = $soapClient->__soapCall($name,
+                                                 $this->_preProcessArguments($arguments),
+                                                 null, /* Options are already set to the SOAP client object */
+                                                 (count($soapHeaders) > 0)? $soapHeaders : null,
+                                                 $this->_soapOutputHeaders);
 
         // Reset non-permanent input headers
-        $this->soapInputHeaders = array();
+        $this->_soapInputHeaders = array();
 
         return $this->_preProcessResult($result);
     }
 
-    /**
-     * Send an RPC request to the service for a specific method.
-     *
-     * @param  string $method Name of the method we want to call.
-     * @param  array $params List of parameters for the method.
-     * @return mixed Returned results.
-     */
-    public function call($method, $params = array())
-    {
-        return call_user_func_array(array($this, '__call'), array($method, $params));
-    }
 
     /**
      * Return a list of available functions
      *
      * @return array
-     * @throws Exception\UnexpectedValueException
+     * @throws Zend_Soap_Client_Exception
      */
     public function getFunctions()
     {
-        if ($this->getWSDL() == null) {
-            throw new Exception\UnexpectedValueException(sprintf(
-                '%s method is available only in WSDL mode.',
-                __METHOD__
-            ));
+        if ($this->getWsdl() == null) {
+            require_once 'Zend/Soap/Client/Exception.php';
+            throw new Zend_Soap_Client_Exception('\'getFunctions\' method is available only in WSDL mode.');
         }
 
         $soapClient = $this->getSoapClient();
         return $soapClient->__getFunctions();
     }
 
+
+    /**
+     * Get used types.
+     *
+     * @return array
+     */
+
     /**
      * Return a list of SOAP types
      *
      * @return array
-     * @throws Exception\UnexpectedValueException
+     * @throws Zend_Soap_Client_Exception
      */
     public function getTypes()
     {
-        if ($this->getWSDL() == null) {
-            throw new Exception\UnexpectedValueException(sprintf(
-                '%s method is available only in WSDL mode.',
-                __METHOD__
-            ));
+        if ($this->getWsdl() == null) {
+            require_once 'Zend/Soap/Client/Exception.php';
+            throw new Zend_Soap_Client_Exception('\'getTypes\' method is available only in WSDL mode.');
         }
 
         $soapClient = $this->getSoapClient();
+
         return $soapClient->__getTypes();
     }
 
     /**
-     * Set SoapClient object
-     *
-     * @param  SoapClient $soapClient
-     * @return self
+     * @param SoapClient $soapClient
+     * @return Zend_Soap_Client
      */
     public function setSoapClient(SoapClient $soapClient)
     {
-        $this->soapClient = $soapClient;
+        $this->_soapClient = $soapClient;
         return $this;
     }
 
     /**
-     * Get SoapClient object
-     *
      * @return SoapClient
      */
     public function getSoapClient()
     {
-        if ($this->soapClient == null) {
+        if ($this->_soapClient == null) {
             $this->_initSoapClientObject();
         }
-        return $this->soapClient;
+        return $this->_soapClient;
     }
 
     /**
-     * Set cookie
-     *
-     * @param  string $cookieName
-     * @param  string $cookieValue
-     * @return self
+     * @param string $name
+     * @param string $value
+     * @return Zend_Soap_Client
      */
     public function setCookie($cookieName, $cookieValue=null)
     {

@@ -1,45 +1,67 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * LICENSE
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_ProgressBar
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: JsPush.php 23775 2011-03-01 17:25:24Z ralph $
  */
-
-namespace Zend\ProgressBar\Adapter;
-
-use Zend\Json\Json;
 
 /**
- * Zend\ProgressBar\Adapter\JsPush offers a simple method for updating a
- * progressbar in a browser.
+ * @see Zend_Json
  */
-class JsPush extends AbstractAdapter
+require_once 'Zend/Json.php';
+
+/**
+ * @see Zend_ProgressBar_Adapter
+ */
+require_once 'Zend/ProgressBar/Adapter.php';
+
+/**
+ * Zend_ProgressBar_Adapter_JsPush offers a simple method for updating a
+ * progressbar in a browser.
+ *
+ * @category  Zend
+ * @package   Zend_ProgressBar
+ * @uses      Zend_ProgressBar_Adapter_Interface
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_ProgressBar_Adapter_JsPush extends Zend_ProgressBar_Adapter
 {
     /**
      * Name of the JavaScript method to call on update
      *
      * @var string
      */
-    protected $updateMethodName = 'Zend\ProgressBar\ProgressBar\Update';
+    protected $_updateMethodName = 'Zend_ProgressBar_Update';
 
     /**
      * Name of the JavaScript method to call on finish
      *
      * @var string
      */
-    protected $finishMethodName;
+    protected $_finishMethodName;
 
     /**
      * Set the update method name
      *
      * @param  string $methodName
-     * @return \Zend\ProgressBar\Adapter\JsPush
+     * @return Zend_ProgressBar_Adapter_JsPush
      */
     public function setUpdateMethodName($methodName)
     {
-        $this->updateMethodName = $methodName;
+        $this->_updateMethodName = $methodName;
 
         return $this;
     }
@@ -48,23 +70,23 @@ class JsPush extends AbstractAdapter
      * Set the finish method name
      *
      * @param  string $methodName
-     * @return \Zend\ProgressBar\Adapter\JsPush
+     * @return Zend_ProgressBar_Adapter_JsPush
      */
     public function setFinishMethodName($methodName)
     {
-        $this->finishMethodName = $methodName;
+        $this->_finishMethodName = $methodName;
 
         return $this;
     }
 
     /**
-     * Defined by Zend\ProgressBar\Adapter\AbstractAdapter
+     * Defined by Zend_ProgressBar_Adapter_Interface
      *
      * @param  float   $current       Current progress value
      * @param  float   $max           Max progress value
      * @param  float   $percent       Current percent value
-     * @param  int $timeTaken     Taken time in seconds
-     * @param  int $timeRemaining Remaining time in seconds
+     * @param  integer $timeTaken     Taken time in seconds
+     * @param  integer $timeRemaining Remaining time in seconds
      * @param  string  $text          Status text
      * @return void
      */
@@ -80,7 +102,7 @@ class JsPush extends AbstractAdapter
         );
 
         $data = '<script type="text/javascript">'
-              . 'parent.' . $this->updateMethodName . '(' . Json::encode($arguments) . ');'
+              . 'parent.' . $this->_updateMethodName . '(' . Zend_Json::encode($arguments) . ');'
               . '</script>';
 
         // Output the data
@@ -88,18 +110,18 @@ class JsPush extends AbstractAdapter
     }
 
     /**
-     * Defined by Zend\ProgressBar\Adapter\AbstractAdapter
+     * Defined by Zend_ProgressBar_Adapter_Interface
      *
      * @return void
      */
     public function finish()
     {
-        if ($this->finishMethodName === null) {
+        if ($this->_finishMethodName === null) {
             return;
         }
 
         $data = '<script type="text/javascript">'
-              . 'parent.' . $this->finishMethodName . '();'
+              . 'parent.' . $this->_finishMethodName . '();'
               . '</script>';
 
         $this->_outputData($data);

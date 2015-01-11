@@ -1,20 +1,38 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Memory
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Locked.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Memory\Container;
+/** Zend_Memory_Container */
+require_once 'Zend/Memory/Container.php';
 
 /**
  * Memory value container
  *
  * Locked (always stored in memory).
+ *
+ * @category   Zend
+ * @package    Zend_Memory
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Locked extends AbstractContainer
+class Zend_Memory_Container_Locked extends Zend_Memory_Container
 {
     /**
      * Value object
@@ -27,6 +45,8 @@ class Locked extends AbstractContainer
     /**
      * Object constructor
      *
+     * @param Zend_Memory_Manager $memoryManager
+     * @param integer $id
      * @param string $value
      */
     public function __construct($value)
@@ -53,7 +73,7 @@ class Locked extends AbstractContainer
     /**
      * Return true if object is locked
      *
-     * @return bool
+     * @return boolean
      */
     public function isLocked()
     {

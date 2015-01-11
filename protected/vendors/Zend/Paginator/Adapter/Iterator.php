@@ -1,70 +1,102 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Zend Framework
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Paginator
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Iterator.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
-namespace Zend\Paginator\Adapter;
+/**
+ * @see Zend_Paginator_Adapter_Interface
+ */
+require_once 'Zend/Paginator/Adapter/Interface.php';
 
-use Zend\Paginator;
+/**
+ * @see Zend_Paginator_SerializableLimitIterator
+ */
+require_once 'Zend/Paginator/SerializableLimitIterator.php';
 
-class Iterator implements AdapterInterface
+/**
+ * @category   Zend
+ * @package    Zend_Paginator
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Paginator_Adapter_Iterator implements Zend_Paginator_Adapter_Interface
 {
     /**
      * Iterator which implements Countable
      *
      * @var Iterator
      */
-    protected $iterator = null;
+    protected $_iterator = null;
 
     /**
      * Item count
      *
-     * @var int
+     * @var integer
      */
-    protected $count = null;
+    protected $_count = null;
 
     /**
      * Constructor.
      *
-     * @param  \Iterator $iterator Iterator to paginate
-     * @throws \Zend\Paginator\Adapter\Exception\InvalidArgumentException
+     * @param  Iterator $iterator Iterator to paginate
+     * @throws Zend_Paginator_Exception
      */
-    public function __construct(\Iterator $iterator)
+    public function __construct(Iterator $iterator)
     {
-        if (!$iterator instanceof \Countable) {
-            throw new Exception\InvalidArgumentException('Iterator must implement Countable');
+        if (!$iterator instanceof Countable) {
+            /**
+             * @see Zend_Paginator_Exception
+             */
+            require_once 'Zend/Paginator/Exception.php';
+
+            throw new Zend_Paginator_Exception('Iterator must implement Countable');
         }
 
-        $this->iterator = $iterator;
-        $this->count = count($iterator);
+        $this->_iterator = $iterator;
+        $this->_count = count($iterator);
     }
 
     /**
      * Returns an iterator of items for a page, or an empty array.
      *
-     * @param  int $offset Page offset
-     * @param  int $itemCountPerPage Number of items per page
-     * @return array|\Zend\Paginator\SerializableLimitIterator
+     * @param  integer $offset Page offset
+     * @param  integer $itemCountPerPage Number of items per page
+     * @return LimitIterator|array
      */
     public function getItems($offset, $itemCountPerPage)
     {
-        if ($this->count == 0) {
+        if ($this->_count == 0) {
             return array();
         }
-        return new Paginator\SerializableLimitIterator($this->iterator, $offset, $itemCountPerPage);
+
+        // @link http://bugs.php.net/bug.php?id=49906 | ZF-8084
+        // return new LimitIterator($this->_iterator, $offset, $itemCountPerPage);
+        return new Zend_Paginator_SerializableLimitIterator($this->_iterator, $offset, $itemCountPerPage);
     }
 
     /**
      * Returns the total number of rows in the collection.
      *
-     * @return int
+     * @return integer
      */
     public function count()
     {
-        return $this->count;
+        return $this->_count;
     }
 }
