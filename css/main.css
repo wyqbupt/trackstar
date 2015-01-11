@@ -29,7 +29,7 @@ body
 
 #sidebar
 {
-	padding: 20px 20px 20px 0;
+	padding: 20px;
 }
 
 #footer
@@ -43,8 +43,22 @@ body
 
 #logo
 {
+	position: relative;
 	padding: 10px 20px;
 	font-size: 200%;
+	color: #c9e0ed;
+	text-decoration: none;
+}
+#logo a
+{
+	color: #555555;
+	text-decoration: none;
+}
+#logo #rss
+{
+        position: absolute;
+        top: 16px;
+        right: 14px;
 }
 
 #mainmenu
@@ -128,6 +142,37 @@ div.form .rememberMe label
 	display: inline;
 }
 
+.actions
+{
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+
+.actions li
+{
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+.actions li a
+{
+	padding: 5px;
+	margin: 0;
+	color: #298dcd;
+	text-decoration: none;
+	font-size: 0.8em;
+	font-weight: bold;
+	background: #DFF4FF;
+	border-left: 5px solid #589FC8;
+}
+
+.actions li a:hover, .actions li a.active
+{
+	background: #589FC8;
+	color: white;
+}
+
 div.view
 {
 	padding: 10px;
@@ -146,16 +191,9 @@ div.breadcrumbs span
 	font-weight: bold;
 }
 
-div.search-form
-{
-	padding: 10px;
-	margin: 10px 0;
-	background: #eee;
-}
-
 .portlet
 {
-
+	margin: 0 0 15px;
 }
 
 .portlet-decoration
@@ -167,6 +205,16 @@ div.search-form
 
 .portlet-title
 {
+        font-size: 12px;
+        font-weight: bold;
+        padding: 0;
+        margin: 0;
+        color: #298dcd;
+}
+
+.portlet-decoration span
+{
+  display: block;
 	font-size: 12px;
 	font-weight: bold;
 	padding: 0;
@@ -177,7 +225,7 @@ div.search-form
 .portlet-content
 {
 	font-size:0.9em;
-	margin: 0 0 15px 0;
+	margin: 0px;
 	padding: 5px 8px;
 	background:#EFFDFF;
 }
@@ -196,34 +244,105 @@ div.search-form
 	padding: 2px 0 4px 0px;
 }
 
-.operations
+.portlet-content .row input[type=text]
 {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+	width: 98%;
+}
+.post
+{
+	margin: 0 0 20px;
 }
 
-.operations li
+.post .title
 {
-	padding-bottom: 2px;
+	font-size: 1.5em;
+	border-bottom: 1px solid #C9E0ED;
 }
 
-.operations li a
+.post .title a
 {
-	font: bold 12px Arial;
-	color: #0066A4;
-	display: block;
-	padding: 2px 0 2px 8px;
-	line-height: 15px;
+	color: #555;
 	text-decoration: none;
 }
 
-.operations li a:visited
+.post .author
 {
-	color: #0066A4;
+	color: #888;
+	margin: 0 0 5px;
 }
 
-.operations li a:hover
+.post .nav
 {
-	background: #80CFFF;
+	-moz-border-radius:7px;
+	padding: 5px;
+	background: #EFFDFF;
+
+        clear:left;
+}
+
+.comment
+{
+	-moz-border-radius:7px;
+	padding: 10px;
+	background: #F5F5F5;
+	margin: 5px 0;
+}
+
+.comment .content
+{
+	margin: 10px 0;
+}
+
+.comment .author
+{
+	margin: 5px 0;
+	padding: 0 0 3px;
+	border-bottom: 1px solid #DDD;
+}
+
+.comment .time
+{
+	color: #888;
+	font-size: 0.8em;
+}
+
+.comment a.cid
+{
+	color:#CCC;
+	float:right;
+	font-size:1.5em;
+	font-weight:bold;
+	padding:0 5px 5px 5px;
+	text-decoration: none;
+}
+
+.comment a.cid:hover
+{
+	color:#555;
+}
+
+.comment .pending
+{
+	color:red;
+}
+
+.postdate-portlet
+{
+	margin-bottom: 0px;
+	text-align: center;
+}
+
+.postdate-portlet .portlet-content
+{
+	padding: 4px;
+}
+
+.title table
+{
+	margin-bottom: 0;
+}
+
+.title td
+{
+	padding: 4px 4px 4px 0px;
 }

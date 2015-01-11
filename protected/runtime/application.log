@@ -2735,3 +2735,253 @@ Stack trace:
 REQUEST_URI=/trackstar/index.php?r=comment/feed
 in D:\wamp\www\trackstar\protected\controllers\CommentController.php (161)
 in D:\wamp\www\trackstar\index.php (13)
+2015/01/11 21:44:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "2/commentfeed.xml".' in D:\wamp\www\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('2/commentfeed.x...')
+#1 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:44:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "2/commentfeed.xml".' in D:\wamp\www\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('2/commentfeed.x...')
+#1 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:45:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "commentFeed".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction('commentFeed')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('commentFeed')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/commentFee...')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:46:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "commentFeed".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction('commentFeed')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('commentFeed')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/commentFee...')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:46:54 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "commentFeed".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction('commentFeed')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('commentFeed')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/commentFee...')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:47:29 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "commentFeed".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction('commentFeed')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('commentFeed')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/commentFee...')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:47:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "commentFeed".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction('commentFeed')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run('commentFeed')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/commentFee...')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:47:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action " commentFeed".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction(' commentFeed')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run(' commentFeed')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/ commentFe...')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:47:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "2".' in D:\wamp\www\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('2')
+#1 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/trackstar/index.php/2/
+---
+2015/01/11 21:47:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "2".' in D:\wamp\www\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('2')
+#1 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#2 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/trackstar/index.php/2/
+---
+2015/01/11 21:48:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action " commentFeed".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction(' commentFeed')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run(' commentFeed')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/ commentFe...')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:48:51 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action " commentFeed".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction(' commentFeed')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run(' commentFeed')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/ commentFe...')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:49:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action " commentFeed".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction(' commentFeed')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run(' commentFeed')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/ commentFe...')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:50:54 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action " commentFeed".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction(' commentFeed')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run(' commentFeed')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/ commentFe...')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 21:54:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action " commentFeed".' in D:\wamp\www\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(270): CController->missingAction(' commentFeed')
+#1 D:\wamp\www\yii\framework\web\CWebApplication.php(282): CController->run(' commentFeed')
+#2 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/ commentFe...')
+#3 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#4 D:\wamp\www\trackstar\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/trackstar/index.php/2/commentfeed.xml
+---
+2015/01/11 22:10:27 [error] [php] Missing argument 1 for ProjectController::loadModel(), called in D:\wamp\www\trackstar\protected\controllers\ProjectController.php on line 67 and defined (D:\wamp\www\trackstar\protected\controllers\ProjectController.php:174)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): ProjectController->runAction()
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): ProjectController->filterAccessControl()
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): ProjectController->runActionWithFilters()
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): ProjectController->run()
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php/project/2
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (174)
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (67)
+in D:\wamp\www\trackstar\index.php (13)
+2015/01/11 22:10:27 [error] [php] Missing argument 1 for ProjectController::loadModel(), called in D:\wamp\www\trackstar\protected\controllers\ProjectController.php on line 67 and defined (D:\wamp\www\trackstar\protected\controllers\ProjectController.php:174)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): ProjectController->runAction()
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): ProjectController->filterAccessControl()
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): ProjectController->runActionWithFilters()
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): ProjectController->run()
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php/project/2
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (174)
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (67)
+in D:\wamp\www\trackstar\index.php (13)
+2015/01/11 22:10:31 [error] [php] Missing argument 1 for ProjectController::loadModel(), called in D:\wamp\www\trackstar\protected\controllers\ProjectController.php on line 67 and defined (D:\wamp\www\trackstar\protected\controllers\ProjectController.php:174)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): ProjectController->runAction()
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): ProjectController->filterAccessControl()
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): ProjectController->runActionWithFilters()
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): ProjectController->run()
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php/project/2
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (174)
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (67)
+in D:\wamp\www\trackstar\index.php (13)
+2015/01/11 22:10:39 [error] [php] Missing argument 1 for ProjectController::loadModel(), called in D:\wamp\www\trackstar\protected\controllers\ProjectController.php on line 67 and defined (D:\wamp\www\trackstar\protected\controllers\ProjectController.php:174)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): ProjectController->runAction()
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): ProjectController->filterAccessControl()
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): ProjectController->runActionWithFilters()
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): ProjectController->run()
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php/project/1
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (174)
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (67)
+in D:\wamp\www\trackstar\index.php (13)
+2015/01/11 22:10:40 [error] [php] Missing argument 1 for ProjectController::loadModel(), called in D:\wamp\www\trackstar\protected\controllers\ProjectController.php on line 67 and defined (D:\wamp\www\trackstar\protected\controllers\ProjectController.php:174)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): ProjectController->runAction()
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): ProjectController->filterAccessControl()
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): ProjectController->runActionWithFilters()
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): ProjectController->run()
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php/project/1
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (174)
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (67)
+in D:\wamp\www\trackstar\index.php (13)
+2015/01/11 22:11:01 [error] [php] Missing argument 1 for ProjectController::loadModel(), called in D:\wamp\www\trackstar\protected\controllers\ProjectController.php on line 67 and defined (D:\wamp\www\trackstar\protected\controllers\ProjectController.php:174)
+Stack trace:
+#0 D:\wamp\www\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#1 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(133): ProjectController->runAction()
+#2 D:\wamp\www\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#3 D:\wamp\www\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#4 D:\wamp\www\yii\framework\web\filters\CInlineFilter.php(58): ProjectController->filterAccessControl()
+#5 D:\wamp\www\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#6 D:\wamp\www\yii\framework\web\CController.php(291): CFilterChain->run()
+#7 D:\wamp\www\yii\framework\web\CController.php(265): ProjectController->runActionWithFilters()
+#8 D:\wamp\www\yii\framework\web\CWebApplication.php(282): ProjectController->run()
+#9 D:\wamp\www\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#10 D:\wamp\www\yii\framework\base\CApplication.php(184): CWebApplication->processRequest()
+#11 D:\wamp\www\trackstar\index.php(13): CWebApplication->run()
+REQUEST_URI=/trackstar/index.php/project/1
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (174)
+in D:\wamp\www\trackstar\protected\controllers\ProjectController.php (67)
+in D:\wamp\www\trackstar\index.php (13)
