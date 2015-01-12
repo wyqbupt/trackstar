@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection">
 	<![endif]-->
 
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/main.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css">
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
@@ -22,9 +22,7 @@
 <div class="container" id="page">
 
 	<div id="header">
-		<div id="logo"><?php echo CHtml::link(CHtml::encode(Yii::app()->name),array('site/index')); ?>
 			<div id="rss"><?php echo CHtml::link(CHtml::image(Yii::app()->request->baseUrl.'/systemImages/feed.gif'),array('comment/feed')); ?></div>
-		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
@@ -40,12 +38,7 @@
 	</div><!-- mainmenu -->
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-			//'links'=>$this->breadcrumbs,
-			'links'=>array( 
-				'Projects'=>array('project/index'), 
-				'Project 1'=>array('project/view','id'=>1),
-				'Edit', 
-			)
+			'links'=>$this->breadcrumbs,
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
 

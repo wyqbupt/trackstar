@@ -17,7 +17,9 @@ return array(
 		'application.models.*',
 		'application.components.*',
 	),
-
+	//add a theme
+	'theme'=>'classic',
+	
 	'modules'=>array(
 		
 		'gii'=>array(
