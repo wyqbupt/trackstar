@@ -39,24 +39,27 @@ return array(
 		),
 
 		// uncomment the following to enable URLs in path-format
-		
+		/*
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-				//'<pid:\d+>/commentfeed'=>array('site/ commentFeed', 'urlSuffix'=>'.xml', 'caseSensitive'=>false),
+				'<pid:\d+>/commentfeed'=>array('site/ commentFeed', 'urlSuffix'=>'.xml', 'caseSensitive'=>false),
 				'commentfeed'=>array('comment/feed','urlSuffix'=>'.xml', 'caseSensitive'=>false),
 				
 			),
 			//'showScriptName'=>false,
 		),
-		
+		*/
 
 		'authManager'=>array( 
 			'class'=>'CDbAuthManager', 
 			'connectionID'=>'db', 
+			'itemTable' => 'tbl_auth_item',
+			'itemChildTable' => 'tbl_auth_item_child',
+			'assignmentTable' => 'tbl_auth_assignment',
 		),
 		
 		

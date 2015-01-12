@@ -28,7 +28,7 @@ class ProjectController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','adduser'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -164,6 +164,40 @@ class ProjectController extends Controller
 		));
 	}
 
+		/**
+	 * Provides a form so that project administrators can
+	 * associate other users to the project
+	 */
+	public function actionAdduser($id)
+	{
+		$project = $this->loadModel($id);
+		if(!Yii::app()->user->checkAccess('createUser', array('project'=>$project)))
+		{
+			throw new CHttpException(403,'You are not authorized to perform this action.');
+		}
+		
+		$form=new ProjectUserForm; 
+		// collect user input data
+		if(isset($_POST['ProjectUserForm']))
+		{
+			$form->attributes=$_POST['ProjectUserForm'];
+			$form->project = $project;
+			// validate user input  
+			if($form->validate())  
+			{
+				if($form->assign())
+				{
+					Yii::app()->user->setFlash('success',$form->username . " has been added to the project." ); 
+					//reset the form for another user to be associated if desired
+					$form->unsetAttributes();
+					$form->clearErrors();	
+				}
+			}
+		}
+		$form->project = $project;
+		$this->render('adduser',array('model'=>$form)); 
+	}
+	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.

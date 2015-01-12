@@ -23,16 +23,13 @@ class UserIdentity extends CUserIdentity
 		
 		if($user == NULL)
 		{
-		
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
 		}	
 		else
 		{
-			if($user->password != $user->encrypt($this->password))
+			if($user->password != $user->hashPassword($this->password))
 			{
-		
 				$this->errorCode=self::ERROR_PASSWORD_INVALID;
-			
 			}
 			else
 			{
