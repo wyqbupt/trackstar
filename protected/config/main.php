@@ -39,7 +39,7 @@ return array(
 		),
 
 		// uncomment the following to enable URLs in path-format
-		/*
+		
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
@@ -52,7 +52,7 @@ return array(
 			),
 			//'showScriptName'=>false,
 		),
-		*/
+		
 
 		'authManager'=>array( 
 			'class'=>'CDbAuthManager', 
