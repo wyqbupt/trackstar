@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Comments'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
+	'Comment '.$model->id=>array('view','id'=>$model->id),
 	'Update',
 );
 
